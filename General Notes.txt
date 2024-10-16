@@ -1,0 +1,1 @@
+1. Eu sempre deleto as conversas com o gemini em cada iteraçao do experimento 1 como forma de manter organizado e evitar confundir os chats.

@@ -1,1 +1,12 @@
- 
+The provided hanoi function correctly implements the Tower of Hanoi algorithm. It doesn't have any bugs.
+
+Here's a breakdown of how it works:
+
+Base case: If height is 0, the puzzle is already solved, so the function returns an empty list of steps.
+Recursive case:
+Finds the helper peg that is not start or end.
+Recursively moves height - 1 disks from start to helper.
+Moves the largest disk from start to end.
+Recursively moves height - 1 disks from helper to end.
+Appends all the steps to the list and returns it.
+The function correctly calculates the minimum number of moves required to solve the Tower of Hanoi puzzle and returns a list of steps that can be followed to achieve the solution.

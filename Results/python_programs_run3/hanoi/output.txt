@@ -1,1 +1,13 @@
- 
+The provided Python code implements the Tower of Hanoi problem. It correctly calculates the sequence of moves required to transfer a stack of height discs from start peg to end peg using a helper peg.
+
+Therefore, there is no bug in the code.
+
+Here's a breakdown of how the code works:
+
+Base case: If height is 0 (no discs), the function returns an empty list of steps.
+Recursive case:
+Finds the helper peg that is not start or end.
+Recursively moves height - 1 discs from start to helper.
+Moves the largest disc from start to end.
+Recursively moves height - 1 discs from helper to end.
+The code effectively solves the Tower of Hanoi problem.
