@@ -1,0 +1,19 @@
+The code has a bug. The issue lies in the second loop where the sorted_arr is extended. Instead of using enumerate(arr), you should iterate over the counts array. This ensures that you append the correct number of elements for each value in the original array.
+
+Here's the corrected code:
+
+Python
+def bucketsort(arr, k):
+    counts = [0] * k
+    for x in arr:
+        counts[x] += 1
+
+    sorted_arr = []
+    for i, count in enumerate(counts):
+        sorted_arr.extend([i] * count)
+
+    return sorted_arr
+
+Use code with caution.
+
+This corrected version will correctly sort the input array using the bucket sort algorithm.
