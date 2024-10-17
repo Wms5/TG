@@ -1,0 +1,43 @@
+The given program is a binary search algorithm to find the first occurrence of an element x in a sorted array arr. However, there is a bug in the implementation.
+
+Bug:
+
+The bug lies in the condition (mid == 0 or x != arr[mid - 1]) used to check if the current mid is the first occurrence of x. This condition is incorrect because it might miss the first occurrence in some cases.
+
+Explanation:
+
+Consider the following example:
+
+arr = [1, 2, 2, 3]
+x = 2
+When mid is 2, the condition (mid == 0 or x != arr[mid - 1]) evaluates to True, and the function returns 2. However, the first occurrence of 2 is actually at index 1.
+
+Fix:
+
+To fix the bug, we need to modify the condition to ensure that the current mid is indeed the first occurrence of x. Here's the corrected condition:
+
+if x == arr[mid] and (mid == 0 or x > arr[mid - 1]):
+This corrected condition checks if the current mid is the first element in the array or if the previous element is less than x, indicating that mid is the first occurrence.
+
+Corrected code:
+
+Python
+def find_first_in_sorted(arr, x):
+    lo = 0
+    hi = len(arr)
+
+    while lo <= hi:
+        mid = (lo + hi) // 2
+
+        if x == arr[mid] and (mid == 0 or x > arr[mid - 1]):
+            return mid
+        elif x <= arr[mid]:
+            hi = mid
+        else:
+            lo = mid + 1
+
+    return
+ -1
+Use code with caution.
+
+This corrected code will now correctly find the first occurrence of the element x in the sorted array.

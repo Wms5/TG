@@ -1,0 +1,36 @@
+The given program is a binary search algorithm to find the first occurrence of an element x in a sorted array arr. While it generally works correctly, there's a potential bug in the condition (mid == 0 or x != arr[mid - 1]).
+
+Bug:
+
+The condition is intended to check if the current mid index is the first occurrence of x. However, it can lead to incorrect results in two scenarios:
+
+Empty array: If the array is empty (len(arr) == 0), mid will be calculated as (0 + 0) // 2 = 0. The condition (mid == 0 or x != arr[mid - 1]) will evaluate to True even though x doesn't exist in the array.
+First element is the target: If the first element of the array is the target x, mid will also be 0. The condition (mid == 0 or x != arr[mid - 1]) will evaluate to True because arr[mid - 1] is out of bounds.
+Fix:
+
+To address these issues, we can modify the condition to check if either:
+
+mid is 0 (indicating the first element), or
+mid is greater than 0 and x is different from the previous element.
+Here's the corrected code:
+
+Python
+def find_first_in_sorted(arr, x):
+    lo = 0
+    hi = len(arr)
+
+    while lo <= hi:
+        mid = (lo + hi) // 2
+
+        if x == arr[mid] and (mid == 0 or x != arr[mid - 1]):
+            return mid
+        elif x <= arr[mid]:
+            hi = mid
+        else:
+            lo = mid + 1
+
+    return
+ -1
+Use code with caution.
+
+With this modification, the program will correctly handle empty arrays and find the first occurrence of x even if it's the first element of the array.
