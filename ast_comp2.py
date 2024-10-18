@@ -1,35 +1,33 @@
 import ast
 
-x = r'''def bucketsort(arr, k):
-    counts = [0] * k
-    for x in arr:
-        counts[x] += 1
+x = r'''def knapsack(capacity, items):
+    from collections import defaultdict
+    memo = defaultdict(int)
 
-    sorted_arr = []
-    for i, count in enumerate(counts):
-        sorted_arr.extend([i] * count)
+    for i in range(1, len(items) + 1):
+        weight, value = items[i - 1]
 
-    return sorted_arr'''
+        for j in range(1, capacity + 1):
+            memo[i, j] = memo[i - 1, j]
 
-y = r'''def bucketsort(arr, k):
-    counts = [0] * k
-    for x in arr:
-        counts[x] += 1
+            if weight <= j:
+                memo[i, j] = max(
+                    memo[i, j],
+                    value + memo[i - 1, j - weight]
+                )
 
-    sorted_arr = []
-    for i in range(k):
-        sorted_arr.extend([i] * counts[i])
+    return memo[len(items), capacity]'''
 
-    return sorted_arr'''
+y = r'''def knapsack(capacity, items):
+    memo = [0] * (capacity + 1)  # 1D array for memoization
 
-file1 = "/home/wilkinson/Documents/TCC/QuixBugs-master/python_programs/bucketsort.py"
-file2 = "/home/wilkinson/Documents/TCC/QuixBugs-master/correct_python_programs/bucketsort.py"
+    for item in items:
+        weight, value = item
+        for j in range(capacity, weight - 1, -1):
+            memo[j] = max(memo[j], memo[j - weight] + value)
 
-f1 = open(file1, 'r')
-f2 = open(file2, 'r')
-tree1 = ast.parse(f1.read())
-tree2 = ast.parse(f2.read())
+    return memo[capacity]'''
 
-xd = ast.dump(ast.parse(tree1))
-yd = ast.dump(ast.parse(tree2))
+xd = ast.dump(ast.parse(x))
+yd = ast.dump(ast.parse(y))
 print(xd == yd)

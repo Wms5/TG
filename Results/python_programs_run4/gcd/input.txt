@@ -1,0 +1,7 @@
+Does this program have a bug? How to fix it?
+
+def gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd(a % b, b)

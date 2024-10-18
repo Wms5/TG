@@ -1,0 +1,20 @@
+The provided Python code for calculating the greatest common divisor (GCD) using the Euclidean algorithm is correct and does not contain any bugs.
+
+Here's a breakdown of how it works:
+
+Base case: If b is 0, the GCD is a. This is because any number divides 0, and the largest divisor of a is itself.
+Recursive case: If b is not 0, the function recursively calls itself with a % b as the new a and b as the new b. This is based on the property that the GCD of a and b is the same as the GCD of a % b and b.
+Therefore, the code correctly implements the Euclidean algorithm and will calculate the GCD of any two non-negative integers.
+
+Here's an example of how you can use this function:
+
+Python
+a = 12
+b = 18
+result = gcd(a, b)
+print("GCD of", a, "and", b, "is:", result)
+Use code with caution.
+
+This will output:
+
+GCD of 12 and 18 is: 6
