@@ -2,6 +2,8 @@ Falha na correção
 
 testes falharam
 
+encontra problema em outro lugar e prover o mesmo codigo da entrada
+
 LOG
 
 ================================================== FAILURES ==================================================

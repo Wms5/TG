@@ -2,6 +2,8 @@ Falha ao corrigir.
 
 Testes falharam
 
+tentar resolver outra coisa
+
 Log
 
 FAILED python_testcases/test_hanoi.py::test_hanoi[input_data1-expected1] - assert [(1, 2)] == [(1, 3)]

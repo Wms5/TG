@@ -2,6 +2,11 @@ Falha na correção
 
 Testes falharam
 
+
+porem o codigo provido é o mesmo da solução
+
+vou considerar como correto
+
 LOG
 
 ================================================== FAILURES ==================================================

@@ -3,3 +3,5 @@ Correção feita com sucesso
 Testes passaram
 
 arvores binarias diferentes
+
+solução alternativa
