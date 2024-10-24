@@ -1,1 +1,5 @@
 1. Eu sempre deleto as conversas com o gemini em cada iteraçao do experimento 1 como forma de manter organizado e evitar confundir os chats.
+
+2. ter muito cuidado ao copiar codigo do gemini, pois pode-se perder indentação.
+
+3.
