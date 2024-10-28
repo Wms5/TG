@@ -1,0 +1,15 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 9 items
+
+QuixBugs/python_testcases/test_bitcount.py 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/home/wilkinson/Documents/TCC/TG/QuixBugs/python_programs/bitcount.py:6: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+============================ no tests ran in 14.50s ============================
+Different AST
+
+Falha na correção
+Gemini tenta resolver qualquer outra coisa

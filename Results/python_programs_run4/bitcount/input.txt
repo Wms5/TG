@@ -1,0 +1,8 @@
+Does this program have a bug? How to fix it?
+
+def bitcount(n):
+    count = 0
+    while n:
+        n ^= n - 1
+        count += 1
+    return count

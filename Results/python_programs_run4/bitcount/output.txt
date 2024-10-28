@@ -1,0 +1,40 @@
+Understanding the Code
+
+The provided Python code, bitcount(n), is designed to count the number of set bits (1s) in the binary representation of a non-negative integer n. It employs a clever bit manipulation technique to achieve this.
+
+Identifying the Bug
+
+The code is correct and does not have a bug.
+
+Explanation of the Algorithm:
+
+Initialization:
+
+count is initialized to 0 to store the bit count.
+Iterative Bit Counting:
+
+The while n loop continues as long as n is not zero.
+In each iteration:
+n ^= n - 1: This operation clears the least significant set bit in n. For example, if n = 1011, after this operation, n becomes 1010.
+count += 1: The count is incremented for each cleared bit.
+Return the Bit Count:
+
+Once all bits in n are cleared, the loop terminates, and the final count is returned.
+Example:
+
+Consider n = 11 (binary representation: 1011):
+
+Iteration 1:
+n ^= n - 1: n becomes 1010.
+count becomes 1.
+Iteration 2:
+n ^= n - 1: n becomes 1000.
+count becomes 2.
+Iteration 3:
+n ^= n - 1: n becomes 0.
+count becomes 3.
+The loop terminates, and the function returns 3, which is the correct number of set bits in 11.
+
+Conclusion:
+
+The bitcount(n) function is a correct and efficient implementation for counting set bits in a given integer. It leverages a bitwise XOR operation to effectively clear the least significant set bit in each iteration.

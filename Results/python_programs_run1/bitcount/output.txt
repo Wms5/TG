@@ -1,0 +1,32 @@
+Understanding the Code
+
+The given Python code, bitcount(n), is designed to count the number of set bits (1s) in the binary representation of a non-negative integer n. It employs a clever bit manipulation technique to achieve this.
+
+Identifying the Bug
+
+The code has a bug. It will incorrectly count the number of set bits for the input n = 0.
+
+Why?
+
+The while loop condition n is always False when n = 0.
+Therefore, the loop doesn't execute, and count remains 0, even though 0 has no set bits.
+Fixing the Bug
+
+To correct this, we can simply add a check for n == 0 at the beginning of the function:
+
+Python
+def bitcount(n):
+    if n == 0:
+        return 0
+    count = 0
+    while n:
+        n ^= n - 1
+        count += 1
+    return count
+Use o código com cuidado.
+
+Explanation of the Corrected Code:
+
+Base Case: If n is 0, the function immediately returns 0, as there are no set bits.
+Bit Manipulation Loop: If n is not 0, the loop iteratively clears the least significant set bit in n and increments the count until n becomes 0.
+With this modification, the bitcount function will accurately count the number of set bits for all non-negative integer inputs, including 0.
