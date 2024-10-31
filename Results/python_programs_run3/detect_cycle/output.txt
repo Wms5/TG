@@ -1,0 +1,36 @@
+Identifying the Bug
+
+The provided code snippet implements the Floyd's Cycle-Finding Algorithm to detect a cycle in a linked list. While it's a correct algorithm, the implementation has a potential issue:
+
+The issue:
+The while True loop continues indefinitely, even if the hare pointer reaches the end of the list without encountering a cycle. This can lead to an infinite loop.
+
+Fixing the Bug
+
+To address this, we can modify the loop condition to check if the hare pointer has reached the end of the list:
+
+Python
+def detect_cycle(node):
+    hare = tortoise = node
+
+    while hare and hare.successor:
+        tortoise = tortoise.successor
+        hare = hare.successor.successor
+
+        if hare is tortoise:
+            return True
+
+    return False
+Use o código com cuidado.
+
+Explanation of the Fix:
+
+Loop Condition:
+
+The while hare and hare.successor condition ensures that the loop continues only if both hare and its successor are not None.
+This prevents the hare pointer from going beyond the end of the list, avoiding the infinite loop.
+Cycle Detection:
+
+If the hare and tortoise pointers meet at the same node, a cycle is detected, and True is returned.
+If the loop completes without finding a cycle, False is returned.
+By incorporating this change, the code becomes more robust and efficient, accurately detecting cycles in linked lists while avoiding potential infinite loops.

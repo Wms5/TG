@@ -1,0 +1,14 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 6 items
+
+QuixBugs/python_testcases/test_detect_cycle.py .
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/home/wilkinson/Documents/TCC/TG/QuixBugs/python_programs/detect_cycle.py:11: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+============================== 1 passed in 32.79s ==============================
+Different AST
+
+Prover fix, mas insere outro bug
