@@ -1,0 +1,31 @@
+Identifying the Bug:
+
+The provided Sieve of Eratosthenes implementation has a subtle inefficiency. While it correctly identifies prime numbers, it iterates over the entire primes list for each n, which can be computationally expensive, especially for larger values of max.
+
+Fixing the Bug: A More Efficient Approach:
+
+A more efficient approach is to iterate over the primes list only up to the square root of n. This is because if n is not divisible by any number less than or equal to its square root, it must be prime.
+
+Here's the improved code:
+
+Python
+def sieve(max):
+    primes = []
+    for n in range(2, max + 1):
+        is_prime = True
+        for p in primes:
+            if p * p > n:
+                break
+            if n % p == 0:
+                is_prime = False
+                break
+        if is_prime:
+            primes.append(n)
+    return primes
+Use o código com cuidado.
+
+Explanation of the Improvement:
+
+Early Termination: The inner loop breaks if p * p exceeds n. This is because any prime factor greater than the square root of n would have already been found.
+Efficient Primality Check: The is_prime flag is used to efficiently determine if a number is prime without unnecessary iterations.
+This optimized implementation significantly reduces the time complexity of the Sieve of Eratosthenes algorithm, making it more efficient for larger values of max.

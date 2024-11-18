@@ -1,0 +1,33 @@
+Identifying the Bug
+
+The provided Python code implements the Sieve of Eratosthenes algorithm to find prime numbers up to a given maximum value. However, there's a subtle inefficiency in the implementation.
+
+The primary issue lies in the inner loop:
+
+Python
+any(n % p > 0 for p in primes)
+Use o código com cuidado.
+
+This checks divisibility of n by all previously found primes. This is redundant, especially as we progress through larger numbers.
+
+Fixing the Inefficiency
+
+To optimize the algorithm, we can leverage the fact that a number is prime if it's not divisible by any prime less than or equal to its square root. This allows us to reduce the number of divisibility checks significantly.
+
+Here's the improved implementation:
+
+Python
+def sieve(max):
+    primes = []
+    for n in range(2, max + 1):
+        if all(n % p > 0 for p in primes if p * p <= n):
+            primes.append(n)
+    return primes
+Use o código com cuidado.
+
+Explanation of the Improvement
+
+Optimized Inner Loop:
+The inner loop now checks divisibility only for primes p such that p * p <= n. This is because if a number n is not divisible by any prime less than or equal to its square root, it cannot be divisible by any larger prime.
+This significantly reduces the number of divisibility checks, especially for larger values of max.
+By incorporating this optimization, the Sieve of Eratosthenes algorithm becomes more efficient, especially for larger input values.
