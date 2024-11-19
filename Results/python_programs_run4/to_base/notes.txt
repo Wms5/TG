@@ -1,0 +1,111 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 10 items
+
+QuixBugs/python_testcases/test_to_base.py ...FFFFFFF                     [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_to_base[input_data3-1F] _________________________
+
+input_data = [31, 16], expected = '1F'
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_to_base(input_data, expected):
+>       assert to_base(*input_data) == expected
+E       AssertionError: assert 'F1' == '1F'
+E         
+E         - 1F
+E         + F1
+
+QuixBugs/python_testcases/test_to_base.py:15: AssertionError
+_______________________ test_to_base[input_data4-101001] _______________________
+
+input_data = [41, 2], expected = '101001'
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_to_base(input_data, expected):
+>       assert to_base(*input_data) == expected
+E       AssertionError: assert '100101' == '101001'
+E         
+E         - 101001
+E         + 100101
+
+QuixBugs/python_testcases/test_to_base.py:15: AssertionError
+________________________ test_to_base[input_data5-134] _________________________
+
+input_data = [44, 5], expected = '134'
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_to_base(input_data, expected):
+>       assert to_base(*input_data) == expected
+E       AssertionError: assert '431' == '134'
+E         
+E         - 134
+E         + 431
+
+QuixBugs/python_testcases/test_to_base.py:15: AssertionError
+_________________________ test_to_base[input_data6-14] _________________________
+
+input_data = [27, 23], expected = '14'
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_to_base(input_data, expected):
+>       assert to_base(*input_data) == expected
+E       AssertionError: assert '41' == '14'
+E         
+E         - 14
+E         + 41
+
+QuixBugs/python_testcases/test_to_base.py:15: AssertionError
+_________________________ test_to_base[input_data7-2A] _________________________
+
+input_data = [56, 23], expected = '2A'
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_to_base(input_data, expected):
+>       assert to_base(*input_data) == expected
+E       AssertionError: assert 'A2' == '2A'
+E         
+E         - 2A
+E         + A2
+
+QuixBugs/python_testcases/test_to_base.py:15: AssertionError
+________________________ test_to_base[input_data8-E75] _________________________
+
+input_data = [8237, 24], expected = 'E75'
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_to_base(input_data, expected):
+>       assert to_base(*input_data) == expected
+E       AssertionError: assert '57E' == 'E75'
+E         
+E         - E75
+E         + 57E
+
+QuixBugs/python_testcases/test_to_base.py:15: AssertionError
+________________________ test_to_base[input_data9-749] _________________________
+
+input_data = [8237, 34], expected = '749'
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_to_base(input_data, expected):
+>       assert to_base(*input_data) == expected
+E       AssertionError: assert '947' == '749'
+E         
+E         - 749
+E         + 947
+
+QuixBugs/python_testcases/test_to_base.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_to_base.py::test_to_base[input_data3-1F]
+FAILED QuixBugs/python_testcases/test_to_base.py::test_to_base[input_data4-101001]
+FAILED QuixBugs/python_testcases/test_to_base.py::test_to_base[input_data5-134]
+FAILED QuixBugs/python_testcases/test_to_base.py::test_to_base[input_data6-14]
+FAILED QuixBugs/python_testcases/test_to_base.py::test_to_base[input_data7-2A]
+FAILED QuixBugs/python_testcases/test_to_base.py::test_to_base[input_data8-E75]
+FAILED QuixBugs/python_testcases/test_to_base.py::test_to_base[input_data9-749]
+========================= 7 failed, 3 passed in 0.05s ==========================
+Different AST
+
+tenta resolver qualquer outra coisa

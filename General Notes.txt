@@ -2,4 +2,8 @@
 
 2. ter muito cuidado ao copiar codigo do gemini, pois pode-se perder indentação.
 
-3.
+3. comentar algumas strings que explicam o detalhe do algoritmo no input e output do Quixbugs
+
+4. pode ocorrer de gemini não conseguir encontrar o bug, porém prover um codigo alternativo vizando eficiencia ou legibilidade e esse codigo passar nos testes. vide to_base execução 3
+
+5.
