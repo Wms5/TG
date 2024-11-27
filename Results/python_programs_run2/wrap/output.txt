@@ -1,0 +1,53 @@
+Identifying the Bug:
+
+The provided wrap function has a potential bug that can occur when the input text doesn't contain any spaces within the specified cols limit. In this case, the rfind method won't find a suitable breaking point, leading to incorrect line wrapping.
+
+Fixing the Bug:
+
+Here's a revised version of the wrap function that addresses this issue:
+
+Python
+def wrap(text, cols):
+    lines = []
+    while len(text) > cols:
+        # Find the last space within the `cols` limit, or default to `cols`
+        end = text.rfind(' ', 0, cols + 1)
+        if end == -1:
+            end = cols
+
+        # Handle the case where there are no spaces within the `cols` limit
+        if end == cols:
+            # If we've reached the end of the word, just take the whole word
+            line, text = text[:cols], text[cols:]
+        else:
+            line, text = text[:end], text[end+1:]
+
+        lines.append(line)
+
+    # Add the remaining text as the last line
+    lines.append(text)
+
+    return lines
+Use o código com cuidado.
+
+Explanation of the Fix:
+
+Handling the No-Space Case:
+
+We check if end is equal to cols. If so, it means we've reached the end of a word without finding a space.
+In this case, we simply take the entire word up to the cols limit as a single line.
+Adding the Remaining Text:
+
+After the while loop, we add the remaining text as the last line, ensuring that all text is processed.
+Example Usage:
+
+Python
+text = "This is a long text that needs to be wrapped."
+cols = 10
+
+wrapped_lines = wrap(text, cols)
+for line in wrapped_lines:
+    print(line)
+Use o código com cuidado.
+
+This revised function will handle both cases: when there are spaces within the cols limit and when there aren't. It provides more robust line wrapping for various text inputs.

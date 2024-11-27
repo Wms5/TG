@@ -1,0 +1,37 @@
+Identifying the Bug
+
+The provided wrap function is designed to break a given text into lines, ensuring that no line exceeds the specified cols limit. However, it has a potential issue:
+
+The Issue:
+
+The function may produce lines that are slightly longer than the specified cols limit in certain edge cases. This occurs when the last word in a line is longer than the remaining space in the line.
+
+Fixing the Bug
+
+Here's a revised version of the wrap function that addresses this issue by ensuring that no line exceeds the cols limit:
+
+Python
+def wrap(text, cols):
+    lines = []
+    while text:
+        # Find the last space within the `cols` limit
+        end = text[:cols].rfind(' ')
+
+        # If no space is found, break the word at the `cols` limit
+        if end == -1:
+            end = cols
+
+        # Extract the line and update the remaining text
+        line, text = text[:end], text[end:].lstrip()
+        lines.append(line)
+
+    return lines
+Use o código com cuidado.
+
+Explanation of the Fix:
+
+Iterate until the text is empty: The while text: loop ensures that all text is processed.
+Find the last space within the limit: text[:cols].rfind(' ') searches for the last space within the first cols characters.
+Handle word-breaking: If no space is found, end is set to cols, ensuring the word is broken at the limit.
+Extract the line and update the remaining text: The line is extracted, and the remaining text is updated, removing any leading whitespace.
+This revised version guarantees that no line exceeds the specified cols limit, providing a more accurate and robust text wrapping solution.

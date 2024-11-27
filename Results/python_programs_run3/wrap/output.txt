@@ -1,0 +1,49 @@
+Identifying the Bug
+
+The provided wrap function is designed to break a given text into lines, ensuring that no line exceeds the specified cols limit. However, it has a potential issue:
+
+The Issue:
+
+The function might not handle the last line correctly. If the last line's length is less than or equal to cols, it won't be added to the lines list.
+
+Fixing the Bug
+
+Here's a corrected version of the function that addresses the last line issue:
+
+Python
+def wrap(text, cols):
+    lines = []
+    while len(text) > cols:
+        end = text.rfind(' ', 0, cols + 1)
+        if end == -1:
+            end = cols
+        line, text = text[:end], text[end:]
+        lines.append(line.strip())  # Strip leading/trailing whitespace
+
+    # Add the last line, even if it's shorter than `cols`
+    lines.append(text.strip())
+
+    return lines
+Use o código com cuidado.
+
+Explanation of the Fix:
+
+Handling the Last Line:
+
+The original function only added lines while the text length was greater than cols.
+The corrected version adds the remaining text to the lines list after the loop, ensuring that the last line is included.
+Stripping Whitespace:
+
+The strip() method is used to remove any leading or trailing whitespace from each line, including the last one, to prevent unnecessary spaces.
+Example Usage:
+
+Python
+text = "This is a long text that needs to be wrapped into multiple lines."
+cols = 20
+
+wrapped_lines = wrap(text, cols)
+for line in wrapped_lines:
+    print(line)
+Use o código com cuidado.
+
+With this corrected version, the last line will be properly included in the output, even if it's shorter than the specified cols limit.
