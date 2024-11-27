@@ -1,0 +1,146 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 4 items
+
+QuixBugs/python_testcases/test_kheapsort.py FFFF                         [100%]
+
+=================================== FAILURES ===================================
+____________________ test_kheapsort[input_data0-expected0] _____________________
+
+input_data = [[1, 2, 3, 4, 5], 0], expected = [1, 2, 3, 4, 5]
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kheapsort(input_data, expected):
+>       assert list(kheapsort(*input_data)) == expected
+
+QuixBugs/python_testcases/test_kheapsort.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arr = [1, 2, 3, 4, 5], k = 0
+
+    def kheapsort(arr, k):
+        import heapq
+    
+        # Create a min-heap of size k
+        heap = arr[:k]
+        heapq.heapify(heap)
+    
+        # Build the heap with the first k elements
+        for i in range(k, len(arr)):
+>           if arr[i] > heap[0]:
+E           IndexError: list index out of range
+
+QuixBugs/python_programs/kheapsort.py:10: IndexError
+____________________ test_kheapsort[input_data1-expected1] _____________________
+
+input_data = [[3, 2, 1, 5, 4], 2], expected = [1, 2, 3, 4, 5]
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kheapsort(input_data, expected):
+>       assert list(kheapsort(*input_data)) == expected
+
+QuixBugs/python_testcases/test_kheapsort.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arr = [3, 2, 1, 5, 4], k = 2
+
+    def kheapsort(arr, k):
+        import heapq
+    
+        # Create a min-heap of size k
+        heap = arr[:k]
+        heapq.heapify(heap)
+    
+        # Build the heap with the first k elements
+        for i in range(k, len(arr)):
+            if arr[i] > heap[0]:
+                heapq.heapreplace(heap, arr[i])
+    
+        # Sort the remaining elements, ensuring they are smaller than the k-largest
+        for i in range(len(arr) - 1, k - 1, -1):
+>           arr[i] = heapq.heappop(heap)
+E           IndexError: index out of range
+
+QuixBugs/python_programs/kheapsort.py:15: IndexError
+____________________ test_kheapsort[input_data2-expected2] _____________________
+
+input_data = [[3, 4, 5, 2, 2], 4], expected = [1, 2, 3, 4, 5]
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kheapsort(input_data, expected):
+>       assert list(kheapsort(*input_data)) == expected
+
+QuixBugs/python_testcases/test_kheapsort.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arr = [3, 4, 5, 2, 2], k = 4
+
+    def kheapsort(arr, k):
+        import heapq
+    
+        # Create a min-heap of size k
+        heap = arr[:k]
+        heapq.heapify(heap)
+    
+        # Build the heap with the first k elements
+        for i in range(k, len(arr)):
+            if arr[i] > heap[0]:
+                heapq.heapreplace(heap, arr[i])
+    
+        # Sort the remaining elements, ensuring they are smaller than the k-largest
+        for i in range(len(arr) - 1, k - 1, -1):
+            arr[i] = heapq.heappop(heap)
+    
+        # Sort the first k elements (which are now the smallest)
+        heapq.heapify(heap)
+        for i in range(k):
+>           arr[i] = heapq.heappop(heap)
+E           IndexError: index out of range
+
+QuixBugs/python_programs/kheapsort.py:20: IndexError
+____________________ test_kheapsort[input_data3-expected3] _____________________
+
+input_data = [[12, 12, 5, 6, 5], 3], expected = [1, 3, 5, 6, 12]
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kheapsort(input_data, expected):
+>       assert list(kheapsort(*input_data)) == expected
+
+QuixBugs/python_testcases/test_kheapsort.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arr = [12, 12, 5, 6, 5], k = 3
+
+    def kheapsort(arr, k):
+        import heapq
+    
+        # Create a min-heap of size k
+        heap = arr[:k]
+        heapq.heapify(heap)
+    
+        # Build the heap with the first k elements
+        for i in range(k, len(arr)):
+            if arr[i] > heap[0]:
+                heapq.heapreplace(heap, arr[i])
+    
+        # Sort the remaining elements, ensuring they are smaller than the k-largest
+        for i in range(len(arr) - 1, k - 1, -1):
+            arr[i] = heapq.heappop(heap)
+    
+        # Sort the first k elements (which are now the smallest)
+        heapq.heapify(heap)
+        for i in range(k):
+>           arr[i] = heapq.heappop(heap)
+E           IndexError: index out of range
+
+QuixBugs/python_programs/kheapsort.py:20: IndexError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_kheapsort.py::test_kheapsort[input_data0-expected0]
+FAILED QuixBugs/python_testcases/test_kheapsort.py::test_kheapsort[input_data1-expected1]
+FAILED QuixBugs/python_testcases/test_kheapsort.py::test_kheapsort[input_data2-expected2]
+FAILED QuixBugs/python_testcases/test_kheapsort.py::test_kheapsort[input_data3-expected3]
+============================== 4 failed in 0.04s ===============================
+Different AST
+
+tenta resolver qualquer outra coisa
