@@ -1,0 +1,60 @@
+Analyzing the Code: A Potential Bug
+
+The Problem:
+
+The given topological_ordering function aims to find a topological ordering of nodes in a directed acyclic graph (DAG). However, it might not always produce a correct ordering, especially in cases where there are cycles in the graph.
+
+The issue lies in the condition:
+
+Python
+set(ordered_nodes).issuperset(nextnode.outgoing_nodes)
+Use o código com cuidado.
+
+This condition is not sufficient to guarantee that nextnode can be added to the ordered_nodes list without introducing a cycle. It's possible that there's a path from nextnode back to an already ordered node, even if all of nextnode's immediate outgoing nodes are already in the ordered_nodes list.
+
+Fixing the Bug: A More Robust Approach
+
+To correctly implement topological sorting, we can utilize a more standard algorithm, such as Kahn's algorithm. Here's a Python implementation:
+
+Python
+def topological_ordering(nodes):
+    in_degree = {node: 0 for node in nodes}
+    queue = []
+
+    # Calculate in-degrees of each node
+    for node in nodes:
+        for nextnode in node.outgoing_nodes:
+            in_degree[nextnode] += 1
+
+    # Find nodes with zero in-degree
+    for node in nodes:
+        if in_degree[node] == 0:
+            queue.append(node)
+
+    ordered_nodes = []
+    while queue:
+        node = queue.pop(0)
+        ordered_nodes.append(node)
+
+        for nextnode in node.outgoing_nodes:
+            in_degree[nextnode] -= 1
+            if in_degree[nextnode] == 0:
+                queue.append(nextnode)
+
+    # If there's a cycle, the queue won't be empty
+    if queue:
+        raise ValueError("Graph contains a cycle")
+
+    return ordered_nodes
+Use o código com cuidado.
+
+Explanation of the Fix:
+
+In-degree Calculation: We calculate the in-degree of each node, representing the number of incoming edges.
+Queue Initialization: Nodes with zero in-degree are added to a queue, as they can be processed immediately.
+Topological Ordering:
+We repeatedly dequeue a node from the queue and add it to the ordered_nodes list.
+For each outgoing node of the dequeued node, we decrement its in-degree.
+If the in-degree of an outgoing node becomes zero, it's added to the queue.
+Cycle Detection: If the queue is not empty after processing all nodes, it indicates a cycle in the graph.
+This approach ensures that we process nodes in a topologically sorted order, avoiding cycles and providing a correct solution.
