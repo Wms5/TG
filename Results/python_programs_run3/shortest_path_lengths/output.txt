@@ -1,0 +1,59 @@
+Understanding the Code
+
+The provided Python code implements the Floyd-Warshall algorithm to find the shortest paths between all pairs of nodes in a graph. The algorithm works by iteratively relaxing edges, considering all possible intermediate nodes.
+
+Identifying the Bug
+
+The bug lies in the line:
+
+Python
+length_by_path[i, j] = min(
+    length_by_path[i, j],
+    length_by_path[i, k] + length_by_path[j, k]
+)
+Use o código com cuidado.
+
+This line is intended to update the shortest path from node i to node j by considering node k as an intermediate node. However, the correct formula for the Floyd-Warshall algorithm should be:
+
+Python
+length_by_path[i, j] = min(
+    length_by_path[i, j],
+    length_by_path[i, k] + length_by_path[k, j]
+)
+Use o código com cuidado.
+
+The mistake is using length_by_path[j, k] instead of length_by_path[k, j]. This incorrect calculation can lead to incorrect shortest path lengths.
+
+Fixing the Bug
+
+To fix the bug, simply replace the incorrect line with the correct one:
+
+Python
+length_by_path[i, j] = min(
+    length_by_path[i, j],
+    length_by_path[i, k] + length_by_path[k, j]
+)
+Use o código com cuidado.
+
+Corrected Code
+
+Python
+from collections import defaultdict
+
+def shortest_path_lengths(n, length_by_edge):
+    length_by_path = defaultdict(lambda: float('inf'))
+    length_by_path.update({(i, i): 0 for i in range(n)})
+    length_by_path.update(length_by_edge)
+
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                length_by_path[i, j] = min(
+                    length_by_path[i, j],
+                    length_by_path[i, k] + length_by_path[k, j]
+                )
+
+    return length_by_path
+Use o código com cuidado.
+
+With this correction, the Floyd-Warshall algorithm will now correctly compute the shortest paths between all pairs of nodes in the graph.

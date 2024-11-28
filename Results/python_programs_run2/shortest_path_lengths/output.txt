@@ -1,0 +1,53 @@
+Identifying the Bug
+
+The provided code implements the Floyd-Warshall algorithm to find the shortest paths between all pairs of vertices in a weighted graph. However, there's a subtle error in the way the algorithm is implemented:
+
+The issue lies in the inner loop, where the relaxation step is performed. The correct relaxation step should be:
+
+Python
+length_by_path[i, j] = min(
+    length_by_path[i, j],
+    length_by_path[i, k] + length_by_path[k, j]
+)
+Use o código com cuidado.
+
+Instead, the code currently uses length_by_path[j, k], which might lead to incorrect results, especially in the presence of negative cycles.
+
+Fixing the Bug
+
+To correct the issue, simply modify the inner loop as follows:
+
+Python
+for k in range(n):
+    for i in range(n):
+        for j in range(n):
+            length_by_path[i, j] = min(
+                length_by_path[i, j],
+                length_by_path[i, k] + length_by_path[k,
+ j]
+            )
+Use o código com cuidado.
+
+Complete Corrected Code
+
+Python
+from collections import defaultdict
+
+def shortest_path_lengths(n, length_by_edge):
+    length_by_path = defaultdict(lambda: float('inf'))
+    length_by_path.update({(i, i): 0 for i in range(n)})
+    length_by_path.update(length_by_edge)
+
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                length_by_path[i, j] = min(
+                    length_by_path[i, j],
+                    length_by_path[i, k] + length_by_path[k, j]
+                )
+
+    return length_by_path
+Use o código com cuidado.
+
+With this correction, the algorithm will correctly compute the shortest paths between all pairs of vertices in the graph, taking into account any negative edge weights (as long as there are no negative cycles).
+
