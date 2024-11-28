@@ -1,0 +1,133 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 7 items
+
+QuixBugs/python_testcases/test_kth.py FFFFFFF                            [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_kth[input_data0-5] ____________________________
+
+input_data = [[1, 2, 3, 4, 5, 6, ...], 4], expected = 5
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kth(input_data, expected):
+>       assert kth(*input_data) == expected
+E       assert 1 == 5
+E        +  where 1 = kth(*[[1, 2, 3, 4, 5, 6, ...], 4])
+
+QuixBugs/python_testcases/test_kth.py:15: AssertionError
+___________________________ test_kth[input_data1-7] ____________________________
+
+input_data = [[3, 6, 7, 1, 6, 3, ...], 5], expected = 7
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kth(input_data, expected):
+>       assert kth(*input_data) == expected
+E       assert 3 == 7
+E        +  where 3 = kth(*[[3, 6, 7, 1, 6, 3, ...], 5])
+
+QuixBugs/python_testcases/test_kth.py:15: AssertionError
+___________________________ test_kth[input_data2-3] ____________________________
+
+input_data = [[3, 6, 7, 1, 6, 3, ...], 2], expected = 3
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kth(input_data, expected):
+>       assert kth(*input_data) == expected
+
+QuixBugs/python_testcases/test_kth.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+QuixBugs/python_programs/kth.py:15: in kth
+    return kth(above, k - num_lessoreq)
+QuixBugs/python_programs/kth.py:11: in kth
+    return kth(below, k)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arr = [], k = -1
+
+    def kth(arr, k):
+>       pivot = arr[0]
+E       IndexError: list index out of range
+
+QuixBugs/python_programs/kth.py:3: IndexError
+___________________________ test_kth[input_data3-2] ____________________________
+
+input_data = [[2, 6, 8, 3, 5, 7], 0], expected = 2
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kth(input_data, expected):
+>       assert kth(*input_data) == expected
+
+QuixBugs/python_testcases/test_kth.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+QuixBugs/python_programs/kth.py:15: in kth
+    return kth(above, k - num_lessoreq)
+QuixBugs/python_programs/kth.py:11: in kth
+    return kth(below, k)
+QuixBugs/python_programs/kth.py:11: in kth
+    return kth(below, k)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arr = [], k = -1
+
+    def kth(arr, k):
+>       pivot = arr[0]
+E       IndexError: list index out of range
+
+QuixBugs/python_programs/kth.py:3: IndexError
+___________________________ test_kth[input_data4-34] ___________________________
+
+input_data = [[34, 25, 7, 1, 9], 4], expected = 34
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kth(input_data, expected):
+>       assert kth(*input_data) == expected
+
+QuixBugs/python_testcases/test_kth.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+QuixBugs/python_programs/kth.py:15: in kth
+    return kth(above, k - num_lessoreq)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arr = [], k = -1
+
+    def kth(arr, k):
+>       pivot = arr[0]
+E       IndexError: list index out of range
+
+QuixBugs/python_programs/kth.py:3: IndexError
+___________________________ test_kth[input_data5-6] ____________________________
+
+input_data = [[45, 2, 6, 8, 42, 90, ...], 1], expected = 6
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kth(input_data, expected):
+>       assert kth(*input_data) == expected
+E       assert 2 == 6
+E        +  where 2 = kth(*[[45, 2, 6, 8, 42, 90, ...], 1])
+
+QuixBugs/python_testcases/test_kth.py:15: AssertionError
+__________________________ test_kth[input_data6-322] ___________________________
+
+input_data = [[45, 2, 6, 8, 42, 90, ...], 6], expected = 322
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kth(input_data, expected):
+>       assert kth(*input_data) == expected
+E       assert 45 == 322
+E        +  where 45 = kth(*[[45, 2, 6, 8, 42, 90, ...], 6])
+
+QuixBugs/python_testcases/test_kth.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_kth.py::test_kth[input_data0-5] - asser...
+FAILED QuixBugs/python_testcases/test_kth.py::test_kth[input_data1-7] - asser...
+FAILED QuixBugs/python_testcases/test_kth.py::test_kth[input_data2-3] - Index...
+FAILED QuixBugs/python_testcases/test_kth.py::test_kth[input_data3-2] - Index...
+FAILED QuixBugs/python_testcases/test_kth.py::test_kth[input_data4-34] - Inde...
+FAILED QuixBugs/python_testcases/test_kth.py::test_kth[input_data5-6] - asser...
+FAILED QuixBugs/python_testcases/test_kth.py::test_kth[input_data6-322] - ass...
+============================== 7 failed in 0.05s ===============================
+Different AST
+
+prover solução, mas insere novo bug
