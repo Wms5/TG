@@ -1,0 +1,39 @@
+Identifying the Bug
+
+The primary issue with the provided code lies in the calculation of the dp values. While the idea of using a counter to store the LCS lengths is correct, the recurrence relation used to update the dp values is incorrect.
+
+Correcting the Recurrence Relation
+
+The correct recurrence relation for the Longest Common Subsequence (LCS) problem is:
+
+dp[i][j] = 1 + dp[i-1][j-1] if s[i] == t[j]
+          max(dp[i-1][j], dp[i][j-1]) otherwise
+This relation considers two cases:
+
+Match: If the current characters in both strings match, increment the LCS length by 1, taking the previous diagonal value.
+Mismatch: If the characters don't match, take the maximum LCS length from either the top or left cell in the DP table.
+Corrected Code:
+
+Python
+def lcs_length(s, t):
+    m, n = len(s), len(t)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s[i - 1] == t[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+    return dp[m][n]
+
+Use o código com cuidado.
+
+Explanation of the Correction:
+
+2D DP Table: We use a 2D DP table to store the LCS lengths for substrings ending at each pair of indices.
+Base Cases: The first row and column of the DP table are initialized to 0, as there's no common subsequence if one of the strings is empty.
+Iterative Filling: We iterate through the DP table, filling each cell based on the recurrence relation.
+Return the Final Value: The final LCS length is stored in the bottom-right corner of the DP table.
+This corrected code accurately calculates the LCS length and addresses the bug in the original implementation.

@@ -1,0 +1,45 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 9 items
+
+QuixBugs/python_testcases/test_lcs_length.py ..F......                   [100%]
+
+=================================== FAILURES ===================================
+________________________ test_lcs_length[input_data2-0] ________________________
+
+input_data = ['fun', ''], expected = 0
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_lcs_length(input_data, expected):
+>       assert lcs_length(*input_data) == expected
+
+QuixBugs/python_testcases/test_lcs_length.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'fun', t = ''
+
+    def lcs_length(s, t):
+        from collections import defaultdict
+    
+        dp = defaultdict(int)  # Using defaultdict for efficient handling of missing keys
+    
+        for i in range(len(s)):
+            for j in range(len(t)):
+                if s[i] == t[j]:
+                    # Handle base cases explicitly
+                    if i == 0 or j == 0:
+                        dp[i, j] = 1
+                    else:
+                        dp[i, j] = dp[i - 1, j - 1] + 1
+    
+>       return max(dp.values())
+E       ValueError: max() arg is an empty sequence
+
+QuixBugs/python_programs/lcs_length.py:15: ValueError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_lcs_length.py::test_lcs_length[input_data2-0]
+========================= 1 failed, 8 passed in 0.04s ==========================
+Different AST
+
+prover correção porem insere novo bug
