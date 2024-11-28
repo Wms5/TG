@@ -1,0 +1,32 @@
+Identifying the Bug
+
+The levenshtein function, while a common implementation for calculating the Levenshtein distance, has a bug in the else clause. The third recursive call, levenshtein(source[1:], target), is incorrect.
+
+Correcting the Bug
+
+The correct implementation should consider three operations: insertion, deletion, and substitution. The third recursive call should be levenshtein(source, target[1:]) to account for the insertion of a character in the source string.
+
+Here's the corrected code:
+
+Python
+def levenshtein(source, target):
+    if source == '' or target == '':
+        return len(source) or len(target)
+
+    elif source[0] == target[0]:
+        return 1 + levenshtein(source[1:], target[1:])
+
+    else:
+        return 1 + min(
+            levenshtein(source, target[1:]),  # Insertion
+            levenshtein(source[1:], target),  # Deletion
+            levenshtein(source[1:], target[1:])  # Substitution
+        )
+Use o código com cuidado.
+
+Explanation of the Correction
+
+Insertion: The third recursive call, levenshtein(source, target[1:]), simulates the insertion of the first character of the target string into the source string.
+Deletion: The second recursive call, levenshtein(source[1:], target), simulates the deletion of the first character of the source string.
+Substitution: The first recursive call, levenshtein(source[1:], target[1:]), simulates the substitution of the first character of the source string with the first character of the target string.
+By considering these three operations and choosing the minimum cost, the corrected levenshtein function accurately calculates the edit distance between two strings.

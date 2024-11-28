@@ -1,0 +1,44 @@
+Identifying the Bug
+
+The provided levenshtein function, while a common implementation of the Levenshtein distance algorithm, has a subtle bug. The issue lies in the third recursive case:
+
+Python
+levenshtein(source[1:], target)
+Use o código com cuidado.
+
+This case incorrectly attempts to insert a character into the source string, while the Levenshtein distance primarily considers substitutions, insertions, and deletions.
+
+Fixing the Bug
+
+To correct this, we need to replace the third recursive case with a deletion operation:
+
+Python
+levenshtein(source[1:], target)
+Use o código com cuidado.
+
+Here's the corrected levenshtein function:
+
+Python
+def levenshtein(source, target):
+    if source == '' or target == '':
+        return len(source) or len(target)
+
+    elif source[0] == target[0]:
+        return 1 + levenshtein(source[1:], target[1:])
+
+    else:
+        return 1 + min(
+            levenshtein(source, target[1:]),  # Insertion
+            levenshtein(source[1:], target[1:]),  # Substitution
+            levenshtein(source[1:], target)  # Deletion
+        )
+Use o código com cuidado.
+
+Explanation of the Correction
+
+The three recursive cases now correctly represent the three fundamental operations for calculating the Levenshtein distance:
+
+Insertion: Add a character to the source string to match the target string.
+Substitution: Replace a character in the source string with a character from the target string.
+Deletion: Remove a character from the source string to match the target string.
+By considering these three operations and choosing the minimum cost, the function accurately calculates the Levenshtein distance between the two strings.
