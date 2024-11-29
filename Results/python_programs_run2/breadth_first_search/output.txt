@@ -1,0 +1,45 @@
+Identifying the Bug
+
+The primary issue with the provided breadth-first search (BFS) implementation lies in the line:
+
+Python
+queue.extend(node for node in node.successors if node not in nodesseen)
+Use o código com cuidado.
+
+While this line intends to add new nodes to the queue, it might lead to duplicate nodes being added if multiple paths lead to the same node. This can result in an infinite loop or incorrect search results.
+
+Fixing the Bug
+
+To address this, we need to ensure that each node is added to the queue only once, even if it's reachable from multiple nodes. We can modify the code as follows:
+
+Python
+from collections import deque as Queue
+
+def breadth_first_search(startnode, goalnode):
+    queue = Queue()
+    queue.append(startnode)
+
+    visited = set()
+    visited.add(startnode)
+
+    while queue:
+        node = queue.popleft()
+
+        if node is goalnode:
+            return True
+
+        for neighbor in node.successors:
+            if neighbor not in visited:
+                queue.append(neighbor)
+                visited.add(neighbor)
+
+    return False
+Use o código com cuidado.
+
+Explanation of the Fix
+
+Using a visited Set: We introduce a visited set to keep track of nodes that have already been explored.
+Checking for Unvisited Neighbors: Before adding a neighbor to the queue, we check if it's already in the visited set. If not, we add it to both the queue and the visited set.
+Early Termination: The while loop now checks if the queue is empty. If so, it means all reachable nodes have been explored without finding the goal node.
+By making this modification, we ensure that each node is processed only once, preventing redundant exploration and potential infinite loops.
+
