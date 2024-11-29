@@ -1,0 +1,17 @@
+The provided code for the square root function is generally correct. However, it can lead to an infinite loop in certain edge cases, specifically when the initial guess approx is very close to zero.
+
+To fix this, we can add a check to ensure that approx is not zero before dividing by it:
+
+Python
+def sqrt(x, epsilon):
+    approx = x / 2
+    while abs(x - approx) > epsilon:
+        if approx == 0:
+            return 0  # Handle the case of zero approximation
+        approx = 0.5 * (approx + x / approx)
+    return approx
+Use o código com cuidado.
+
+This modification will prevent the division by zero error and ensure the function terminates correctly in all cases.
+
+It's important to note that this function is an iterative approximation method. The epsilon parameter determines the desired accuracy of the approximation. A smaller epsilon value will result in a more accurate approximation, but it may also require more iterations.
