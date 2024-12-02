@@ -1,0 +1,26 @@
+Identifying the Bug:
+
+While the provided quicksort implementation is generally correct, it has a potential issue: duplicate elements. If the input array contains duplicate elements, the algorithm might not sort them correctly. This is because it places all elements less than the pivot to the left and all elements greater than the pivot to the right, without considering duplicates.
+
+Fixing the Bug:
+
+To handle duplicates correctly, we can modify the partitioning logic to include elements equal to the pivot in either the lesser or greater partition. Here's a corrected version:
+
+Python
+def quicksort(arr):
+    if not arr:
+        return []
+
+    pivot = arr[0]
+    lesser = quicksort([x for x in arr[1:] if x < pivot])
+    equal = [x for x in arr[1:] if x == pivot]
+    greater = quicksort([x for x in arr[1:] if x > pivot])
+
+    return lesser + equal + [pivot] + greater
+Use o código com cuidado.
+
+Explanation of the Fix:
+
+Separate Equal Partition: We introduce a new partition, equal, to store elements equal to the pivot.
+Combined Return: We combine lesser, equal, [pivot], and greater in the return statement to ensure correct ordering.
+This revised implementation will handle duplicate elements correctly, ensuring a stable and accurate sorting process.

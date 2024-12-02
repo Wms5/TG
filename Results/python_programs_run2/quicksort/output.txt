@@ -1,0 +1,27 @@
+Identifying the Bug
+
+The provided Python code for quicksort has a subtle bug that can lead to incorrect sorting in certain edge cases, specifically when the input array contains duplicate elements.
+
+The Problem:
+The issue arises from the way the lesser and greater lists are constructed. Consider an input array like [3, 2, 3]. In the first recursive call, pivot will be 3, and both 2 and the other 3 will be placed in the lesser list. This can lead to an incorrect sorting order.
+
+Fixing the Bug
+
+To rectify this, we need to ensure that duplicate elements are placed in either the lesser or greater list, but not both. A common approach is to use a "less than or equal to" comparison for the lesser list and a "greater than" comparison for the greater list.
+
+Corrected Code:
+
+Python
+def quicksort(arr):
+    if not arr:
+        return []
+
+    pivot = arr[0]
+    lesser = quicksort([x for x in arr[1:] if x <= pivot])
+    greater = quicksort([x for x in arr[1:] if x > pivot])
+    return lesser + [pivot] + greater
+Use o código com cuidado.
+
+Explanation of the Fix:
+
+By using x <= pivot for the lesser list, we ensure that duplicate elements are included in the lesser list, preventing them from being incorrectly placed in the greater list. This guarantees that the sorting algorithm will always produce the correct result, even in the presence of duplicates.

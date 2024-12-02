@@ -1,0 +1,48 @@
+Identifying the Bug:
+
+While the provided quicksort implementation is a common recursive approach, it has a subtle inefficiency. The issue lies in the repeated slicing of the arr[1:] portion in both the lesser and greater recursive calls. This redundant slicing can lead to performance degradation, especially for larger arrays.
+
+Fixing the Bug: Using Two-Pointer Technique:
+
+To optimize the partitioning step, we can employ a two-pointer technique:
+
+Python
+def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[0]
+    left = 1
+    right = len(arr) - 1
+
+    while left <= right:
+        while left <= right and arr[left] <= pivot:
+            left += 1
+        while left <= right and arr[right] > pivot:
+            right -= 1
+        if left <= right:
+            arr[left], arr[right] = arr[right], arr[left]
+            left += 1
+            right
+ -= 1
+
+    arr[0], arr[right] = arr[right], arr[0]
+
+    return quicksort(arr[:right]) + [pivot] + quicksort(arr[right+1:])
+Use o código com cuidado.
+
+Explanation of the Optimized Approach:
+
+Base Case: If the array has one or fewer elements, it's already sorted.
+Pivot Selection: Choose the first element as the pivot.
+Two-Pointer Partitioning:
+Initialize two pointers, left and right, to the second and last elements, respectively.
+Move left to the right until an element greater than the pivot is found.
+Move right to the left until an element less than or equal to the pivot is found.
+If left is still less than or equal to right, swap the elements at left and right.
+Continue this process until left and right cross each other.
+Pivot Placement: Swap the pivot with the element at right.
+Recursive Calls: Recursively sort the subarrays to the left and right of the pivot.
+Key Improvement:
+
+By using the two-pointer technique, we avoid redundant slicing and directly partition the array in-place. This optimization significantly reduces the time complexity, especially for large datasets.

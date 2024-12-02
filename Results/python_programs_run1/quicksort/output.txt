@@ -1,0 +1,48 @@
+Identifying the Bug:
+
+While the provided quicksort implementation is generally correct, it has a subtle inefficiency: it creates new lists for lesser and greater in each recursive call. This can lead to significant overhead, especially for large input arrays.
+
+Fixing the Bug: Using In-Place Partitioning:
+
+To improve efficiency, we can modify the quicksort function to use in-place partitioning. This involves rearranging the elements of the input array directly, without creating new lists.
+
+Here's the improved implementation:
+
+Python
+def quicksort(arr, low, high):
+    if low < high:
+        pi = partition(arr, low, high)
+        quicksort(arr, low, pi - 1)
+        quicksort(arr, pi + 1, high)
+
+def partition(arr, low, high):
+
+    pivot = arr[high]
+    i = low - 1
+
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+Use o código com cuidado.
+
+Explanation of the Improved Implementation:
+
+quicksort function:
+
+Takes the array, low index, and high index as input.
+Calls the partition function to find the pivot index.
+Recursively sorts the subarrays before and after the pivot.
+partition function:
+
+Selects the last element as the pivot.
+Places smaller elements to the left of the pivot and larger elements to the right.
+Returns the index of the pivot.
+Key Improvement:
+
+In-place partitioning: By rearranging elements within the original array, we avoid creating new lists in each recursive call, significantly reducing memory usage and improving performance, especially for large datasets.
+This optimized quicksort implementation provides a more efficient and space-efficient solution for sorting arrays.
