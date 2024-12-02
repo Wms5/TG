@@ -1,0 +1,30 @@
+Identifying the Bug
+
+The primary issue with the provided flatten function lies in the recursive call within the else block. When an element x is not a list, it's unnecessary to recursively call flatten on it. This leads to incorrect output, especially for non-iterable elements like numbers or strings.
+
+Fixing the Bug
+
+Here's a corrected version of the flatten function:
+
+Python
+def flatten(arr):
+    for x in arr:
+        if isinstance(x, list):
+            yield from flatten(x)
+        else:
+            yield x
+Use o código com cuidado.
+
+Explanation of the Fix
+
+Yield from: This Python syntax is used to delegate the iteration of an iterable to the caller. In this case, when x is a list, we delegate the iteration of the flattened x to the caller.
+Direct Yield: If x is not a list, we simply yield it directly. This avoids unnecessary recursion and ensures that non-iterable elements are included in the flattened output.
+Example Usage:
+
+Python
+arr = [1, 2, [3, 4, [5, 6]], 7]
+flattened_arr = list(flatten(arr))
+print(flattened_arr)  # Output: [1, 2, 3, 4, 5, 6, 7]
+Use o código com cuidado.
+
+By making these modifications, the flatten function now correctly handles both nested lists and non-iterable elements, providing the desired flattened output.

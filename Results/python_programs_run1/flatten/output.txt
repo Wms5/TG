@@ -1,0 +1,34 @@
+Identifying the Bug:
+
+The primary issue with the provided flatten function lies in the recursive call within the else block. When encountering a non-list element, the function recursively calls itself with that element as input. This leads to an infinite recursion, as the function never reaches a base case where it can terminate.
+
+Fixing the Bug:
+
+To correct this, we should only recurse on list elements. For non-list elements, we can directly yield them:
+
+Python
+def flatten(arr):
+    for x in arr:
+        if isinstance(x, list):
+            yield from flatten(x)
+        else:
+            yield x
+Use o código com cuidado.
+
+Explanation of the Fix:
+
+Recursive Case:
+
+If x is a list, we recursively call flatten on x and use yield from to yield each element from the recursive call. This effectively flattens nested lists.
+Base Case:
+
+If x is not a list, we directly yield x. This handles the case of non-list elements, preventing infinite recursion.
+Example Usage:
+
+Python
+arr = [1, 2, [3, 4], 5, [6, [7, 8]]]
+result = list(flatten(arr))
+print(result)  # Output: [1, 2, 3, 4, 5, 6, 7, 8]
+Use o código com cuidado.
+
+By making this modification, the flatten function will correctly flatten nested lists without falling into infinite recursion.
