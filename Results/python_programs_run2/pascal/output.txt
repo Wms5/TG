@@ -1,0 +1,29 @@
+The provided Python code for Pascal's triangle generation has a potential bug in the index handling within the inner loop.
+
+The Bug:
+The issue arises when accessing elements outside the bounds of the previous row, specifically when c is 0. In this case, upleft is calculated as rows[r - 1][c - 1], which would be an index out of bounds.
+
+The Fix:
+To rectify this, we can adjust the condition for calculating upleft. Instead of checking if c > 0, we can check if r > 0 and c > 0. This ensures that we only access elements within the valid range of the previous row.
+
+Here's the corrected code:
+
+Python
+def pascal(n):
+    rows = [[1]]
+    for r in range(1, n):
+        row = []
+        for c in range(0, r + 1):
+            upleft = rows[r - 1][c - 1] if r > 0 and c > 0 else 0
+            upright = rows[r - 1][c] if c < r else 0
+            row.append(upleft + upright)
+        rows.append(row)
+
+    return rows
+Use o código com cuidado.
+
+Explanation of the Fix:
+
+The inner loop now iterates up to r + 1 to account for the additional element in each row.
+The condition for calculating upleft is modified to check both r > 0 and c > 0. This prevents accessing elements outside the bounds of the previous row.
+With this correction, the code will accurately generate Pascal's triangle for any given n.

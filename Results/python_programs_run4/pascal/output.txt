@@ -1,0 +1,27 @@
+Identifying the Bug
+
+The bug in the provided Pascal's triangle implementation lies in the out-of-bounds index access within the upleft calculation. When c is 0, c - 1 becomes negative, leading to an index error.
+
+Fixing the Bug
+
+To rectify this, we can modify the upleft calculation to ensure it's always within the bounds of the previous row:
+
+Python
+def pascal(n):
+    rows = [[1]]
+    for r in range(1, n):
+        row = []
+        for c in range(r + 1):
+            upleft = rows[r - 1][c - 1] if c > 0 else 0
+            upright = rows[r - 1][c]
+            row.append(upleft + upright)
+        rows.append(row)
+
+    return rows
+Use o código com cuidado.
+
+Explanation of the Fix
+
+The key change is in the for loop's range: for c in range(r + 1). This ensures that the loop iterates from 0 to r, inclusive. As a result, when c is 0, the upleft calculation correctly evaluates to 0, avoiding the out-of-bounds access.
+
+With this modification, the code will produce the correct Pascal's triangle for any given n.
