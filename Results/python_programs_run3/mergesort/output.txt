@@ -1,0 +1,47 @@
+Identifying the Bug
+
+The provided mergesort implementation is generally correct. However, there's a subtle issue in the merge function that can lead to incorrect results in specific edge cases.
+
+The problem lies in the line:
+
+Python
+result.extend(left[i:] or right[j:])
+Use o código com cuidado.
+
+This line is intended to append the remaining elements from either left or right to the result list. However, in Python, the or operator returns the first truthy value. If either left[i:] or right[j:] is an empty list, it's considered falsy. In this case, the or operator will return the other list, even if it's also empty.
+
+Fixing the Bug
+
+To address this issue, we can use a more explicit condition to append the remaining elements:
+
+Python
+if i < len(left):
+    result.extend(left[i:])
+else:
+    result.extend(right[j:])
+Use o código com cuidado.
+
+Here's the corrected merge function:
+
+Python
+def merge(left, right):
+    result = []
+    i = 0
+    j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j
+ += 1
+    if i < len(left):
+        result.extend(left[i:])
+    else:
+        result.extend(right[j:])
+
+    return result
+Use o código com cuidado.
+
+With this modification, the mergesort function will work correctly for all input arrays, including edge cases where one of the subarrays is empty.
