@@ -1,0 +1,62 @@
+Analyzing the Shunting Yard Algorithm Implementation
+
+Potential Bug:
+
+The provided Shunting Yard algorithm implementation has a potential issue in handling the precedence of operators, specifically when dealing with the subtraction operator (-).
+
+Problem:
+
+The problem arises when the subtraction operator is used as a unary operator, such as in expressions like -3 + 4. In this case, the algorithm incorrectly treats it as a binary operator with the same precedence as addition.
+
+Solution:
+
+To address this issue, we can introduce a special token, let's call it UNARY_MINUS, to represent unary minus. This token should have a higher precedence than binary operators.
+
+Here's the modified code:
+
+Python
+def shunting_yard(tokens):
+    precedence = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2,
+        'UNARY_MINUS': 3  # Higher precedence for unary minus
+    }
+
+    rpntokens = []
+    opstack = []
+    for token in tokens:
+        if isinstance(token, int):
+            rpntokens.append(token)
+        elif token == '-':
+            # Check if it's a unary minus
+            if not opstack or opstack[-1] not in ['+', '-', '*', '/', '(', 'UNARY_MINUS']:
+                opstack.append('UNARY_MINUS')
+            else:
+                while opstack and precedence[token] <= precedence[opstack[-1]]:
+                    rpntokens.append(opstack.pop())
+                opstack.append(token)
+        else:
+            while opstack and precedence[token] <= precedence[opstack[-1]]:
+                rpntokens.append(opstack.pop())
+            opstack.append(token)
+
+    while opstack:
+        rpntokens.append(opstack.pop())
+
+    return rpntokens
+Use o código com cuidado.
+
+Explanation of the Fix:
+
+Unary Minus Token: We've added a new token UNARY_MINUS with a higher precedence than other binary operators.
+Unary Minus Detection: Before pushing a - operator to the stack, we check if it's a unary minus by examining the previous token. If the previous token is not an operator, we push UNARY_MINUS to the stack.
+Precedence Handling: The precedence rules are adjusted to ensure that UNARY_MINUS is processed before binary operators.
+Additional Considerations:
+
+Tokenization: Ensure that your tokenization process correctly identifies unary minus.
+Error Handling: Implement error handling for invalid input expressions, such as mismatched parentheses or invalid operators.
+Efficiency: Consider optimizing the algorithm for performance, especially for large expressions.
+Testing: Thoroughly test the modified algorithm with various input expressions, including those with unary minus, to ensure correct output.
+By incorporating these changes, you can effectively handle unary minus operations in your Shunting Yard algorithm implementation.

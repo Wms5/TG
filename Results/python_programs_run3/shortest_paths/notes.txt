@@ -1,0 +1,101 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 3 items
+
+QuixBugs/python_testcases/test_shortest_paths.py FFF                     [100%]
+
+=================================== FAILURES ===================================
+____________________________________ test1 _____________________________________
+
+    def test1():
+        """Case 1: Graph with multiple paths
+        Output: {'A': 0, 'C': 3, 'B': 1, 'E': 5, 'D': 10, 'F': 4}
+        """
+    
+        graph = {
+            ("A", "B"): 3,
+            ("A", "C"): 3,
+            ("A", "F"): 5,
+            ("C", "B"): -2,
+            ("C", "D"): 7,
+            ("C", "E"): 4,
+            ("D", "E"): -5,
+            ("E", "F"): -1,
+        }
+>       result = shortest_paths("A", graph)
+
+QuixBugs/python_testcases/test_shortest_paths.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = 'A'
+weight_by_edge = {('A', 'B'): 3, ('A', 'C'): 3, ('A', 'F'): 5, ('C', 'B'): -2, ...}
+
+    def shortest_paths(source, weight_by_edge):
+>       num_nodes = len(weight_by_node)
+E       UnboundLocalError: local variable 'weight_by_node' referenced before assignment
+
+QuixBugs/python_programs/shortest_paths.py:3: UnboundLocalError
+____________________________________ test2 _____________________________________
+
+    def test2():
+        """Case 2: Graph with one path
+        Output: {'A': 0, 'C': 3, 'B': 1, 'E': 5, 'D': 6, 'F': 9}
+        """
+    
+        graph2 = {
+            ("A", "B"): 1,
+            ("B", "C"): 2,
+            ("C", "D"): 3,
+            ("D", "E"): -1,
+            ("E", "F"): 4,
+        }
+>       result = shortest_paths("A", graph2)
+
+QuixBugs/python_testcases/test_shortest_paths.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = 'A'
+weight_by_edge = {('A', 'B'): 1, ('B', 'C'): 2, ('C', 'D'): 3, ('D', 'E'): -1, ...}
+
+    def shortest_paths(source, weight_by_edge):
+>       num_nodes = len(weight_by_node)
+E       UnboundLocalError: local variable 'weight_by_node' referenced before assignment
+
+QuixBugs/python_programs/shortest_paths.py:3: UnboundLocalError
+____________________________________ test3 _____________________________________
+
+    def test3():
+        """Case 3: Graph with cycle
+        Output: {'A': 0, 'C': 3, 'B': 1, 'E': 5, 'D': 6, 'F': 9}
+        """
+    
+        graph3 = {
+            ("A", "B"): 1,
+            ("B", "C"): 2,
+            ("C", "D"): 3,
+            ("D", "E"): -1,
+            ("E", "D"): 1,
+            ("E", "F"): 4,
+        }
+>       result = shortest_paths("A", graph3)
+
+QuixBugs/python_testcases/test_shortest_paths.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = 'A'
+weight_by_edge = {('A', 'B'): 1, ('B', 'C'): 2, ('C', 'D'): 3, ('D', 'E'): -1, ...}
+
+    def shortest_paths(source, weight_by_edge):
+>       num_nodes = len(weight_by_node)
+E       UnboundLocalError: local variable 'weight_by_node' referenced before assignment
+
+QuixBugs/python_programs/shortest_paths.py:3: UnboundLocalError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_shortest_paths.py::test1 - UnboundLocal...
+FAILED QuixBugs/python_testcases/test_shortest_paths.py::test2 - UnboundLocal...
+FAILED QuixBugs/python_testcases/test_shortest_paths.py::test3 - UnboundLocal...
+============================== 3 failed in 0.04s ===============================
+Different AST
+
+tenta resolver outra coisa

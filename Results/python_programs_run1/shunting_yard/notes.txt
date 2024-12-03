@@ -1,0 +1,71 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 6 items
+
+QuixBugs/python_testcases/test_shunting_yard.py ..FFFF                   [100%]
+
+=================================== FAILURES ===================================
+__________________ test_shunting_yard[input_data2-expected2] ___________________
+
+input_data = [[10, '-', 5, '-', 2]], expected = [10, 5, '-', 2, '-']
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_shunting_yard(input_data, expected):
+>       assert shunting_yard(*input_data) == expected
+E       AssertionError: assert [10, 5, 'UMINUS', 2, '-'] == [10, 5, '-', 2, '-']
+E         
+E         At index 2 diff: 'UMINUS' != '-'
+E         Use -v to get more diff
+
+QuixBugs/python_testcases/test_shunting_yard.py:15: AssertionError
+__________________ test_shunting_yard[input_data3-expected3] ___________________
+
+input_data = [[34, '-', 12, '/', 5]], expected = [34, 12, 5, '/', '-']
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_shunting_yard(input_data, expected):
+>       assert shunting_yard(*input_data) == expected
+E       AssertionError: assert [34, 12, 'UMINUS', 5, '/'] == [34, 12, 5, '/', '-']
+E         
+E         At index 2 diff: 'UMINUS' != 5
+E         Use -v to get more diff
+
+QuixBugs/python_testcases/test_shunting_yard.py:15: AssertionError
+__________________ test_shunting_yard[input_data4-expected4] ___________________
+
+input_data = [[4, '+', 9, '*', 9, '-', ...]]
+expected = [4, 9, 9, '*', '+', 10, ...]
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_shunting_yard(input_data, expected):
+>       assert shunting_yard(*input_data) == expected
+E       AssertionError: assert [4, 9, 9, 10,...US', '*', ...] == [4, 9, 9, '*', '+', 10, ...]
+E         
+E         At index 3 diff: 10 != '*'
+E         Use -v to get more diff
+
+QuixBugs/python_testcases/test_shunting_yard.py:15: AssertionError
+__________________ test_shunting_yard[input_data5-expected5] ___________________
+
+input_data = [[7, '*', 43, '-', 7, '+', ...]]
+expected = [7, 43, '*', 7, '-', 13, ...]
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_shunting_yard(input_data, expected):
+>       assert shunting_yard(*input_data) == expected
+E       AssertionError: assert [7, 43, 7, 'U... '*', 13, ...] == [7, 43, '*', 7, '-', 13, ...]
+E         
+E         At index 2 diff: 7 != '*'
+E         Use -v to get more diff
+
+QuixBugs/python_testcases/test_shunting_yard.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_shunting_yard.py::test_shunting_yard[input_data2-expected2]
+FAILED QuixBugs/python_testcases/test_shunting_yard.py::test_shunting_yard[input_data3-expected3]
+FAILED QuixBugs/python_testcases/test_shunting_yard.py::test_shunting_yard[input_data4-expected4]
+FAILED QuixBugs/python_testcases/test_shunting_yard.py::test_shunting_yard[input_data5-expected5]
+========================= 4 failed, 2 passed in 0.04s ==========================
+Different AST
+
+tenta resolver outra coisa
