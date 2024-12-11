@@ -1,0 +1,39 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 4 items
+
+QuixBugs/python_testcases/test_shortest_path_length.py FF..              [100%]
+
+=================================== FAILURES ===================================
+____________________________________ test1 _____________________________________
+
+    def test1():
+        """Case 1: One path
+        Output: 4
+        """
+    
+        result = shortest_path_length(length_by_edge, node0, node1)
+>       assert result == 4
+E       assert 1 == 4
+
+QuixBugs/python_testcases/test_shortest_path_length.py:34: AssertionError
+____________________________________ test2 _____________________________________
+
+    def test2():
+        """Case 2: Multiple path
+        Output: 7
+        """
+    
+        result = shortest_path_length(length_by_edge, node0, node5)
+>       assert result == 7
+E       assert 10 == 7
+
+QuixBugs/python_testcases/test_shortest_path_length.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_shortest_path_length.py::test1 - assert...
+FAILED QuixBugs/python_testcases/test_shortest_path_length.py::test2 - assert...
+========================= 2 failed, 2 passed in 0.04s ==========================
+Different AST
+
+tenta resolver outra coisa

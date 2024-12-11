@@ -1,0 +1,54 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 4 items
+
+QuixBugs/python_testcases/test_shortest_path_length.py .F..              [100%]
+
+=================================== FAILURES ===================================
+____________________________________ test2 _____________________________________
+
+    def test2():
+        """Case 2: Multiple path
+        Output: 7
+        """
+    
+>       result = shortest_path_length(length_by_edge, node0, node5)
+
+QuixBugs/python_testcases/test_shortest_path_length.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+length_by_edge = {(<node.Node object at 0x7ff193043130>, <node.Node object at 0x7ff1930434c0>): 3, (<node.Node object at 0x7ff193043130...de object at 0x7ff193043040>): 1, (<node.Node object at 0x7ff1930434c0>, <node.Node object at 0x7ff193043fd0>): 2, ...}
+startnode = <node.Node object at 0x7ff193043130>
+goalnode = <node.Node object at 0x7ff193042e90>
+
+    def shortest_path_length(length_by_edge, startnode, goalnode):
+        unvisited_nodes = [(0, startnode)]  # Priority queue: (distance, node)
+        visited_nodes = set()
+        node_distances = {startnode: 0}  # Dictionary to store minimum distances
+    
+        while unvisited_nodes:
+            current_distance, current_node = heappop(unvisited_nodes)
+    
+            if current_node in visited_nodes:
+                continue
+    
+            visited_nodes.add(current_node)
+    
+            if current_node == goalnode:
+                return current_distance
+    
+            for neighbor in current_node.successors:
+                tentative_distance = node_distances[current_node] + length_by_edge[current_node, neighbor]
+                if neighbor not in node_distances or tentative_distance < node_distances[neighbor]:
+                    node_distances[neighbor] = tentative_distance
+>                   heappush(unvisited_nodes, (tentative_distance, neighbor))
+E                   TypeError: '<' not supported between instances of 'Node' and 'Node'
+
+QuixBugs/python_programs/shortest_path_length.py:23: TypeError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_shortest_path_length.py::test2 - TypeEr...
+========================= 1 failed, 3 passed in 0.04s ==========================
+Different AST
+
+tenta resolver outra coisa
