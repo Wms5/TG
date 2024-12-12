@@ -1,0 +1,25 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 6 items
+
+QuixBugs/python_testcases/test_max_sublist_sum.py ....F.                 [100%]
+
+=================================== FAILURES ===================================
+_____________________ test_max_sublist_sum[input_data4-0] ______________________
+
+input_data = [[-4, -4, -5]], expected = 0
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_max_sublist_sum(input_data, expected):
+>       assert max_sublist_sum(*input_data) == expected
+E       assert -4 == 0
+E        +  where -4 = max_sublist_sum(*[[-4, -4, -5]])
+
+QuixBugs/python_testcases/test_max_sublist_sum.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_max_sublist_sum.py::test_max_sublist_sum[input_data4-0]
+========================= 1 failed, 5 passed in 0.03s ==========================
+Different AST
+
+tenta resolver outra coisa

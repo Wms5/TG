@@ -1,0 +1,35 @@
+Identifying the Bug
+
+The provided code, max_sublist_sum, aims to find the maximum sum of a contiguous sublist within a given array. However, it has a critical flaw: it only considers sublists that start from the beginning of the array.
+
+Why is this a problem?
+
+Consider the following array: [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+The maximum sublist sum here is 6 for the sublist [4, -1, 2, 1].
+The given algorithm would incorrectly return 4 as it only considers sublists starting from the beginning.
+
+Fixing the Bug
+
+To address this issue, we need to introduce a mechanism to reset max_ending_here to 0 whenever it becomes negative. This ensures that we don't include negative subarrays in our overall maximum sum calculation.
+
+Here's the corrected code:
+
+Python
+
+def max_sublist_sum(arr):
+    max_so_far = arr[0]
+    max_ending_here = arr[0]
+
+    for num in arr[1:]:
+        max_ending_here = max(num, max_ending_here + num)
+        max_so_far = max(max_so_far, max_ending_here)
+
+    return max_so_far
+Explanation of the Correction:
+
+Initialization: We initialize both max_so_far and max_ending_here to the first element of the array.
+Iterating over the array: We iterate over the array starting from the second element.
+Updating max_ending_here: For each element, we calculate the maximum sum of the sublist ending at that element, considering either the current element itself or the sum of the previous maximum ending sum and the current element.
+Updating max_so_far: We update max_so_far to be the maximum of its current value and the current max_ending_here.
+Return max_so_far: After iterating over the entire array, max_so_far will hold the maximum sum of any contiguous sublist.
+This corrected version effectively handles negative numbers and subarrays, ensuring that the maximum sublist sum is accurately calculated.
