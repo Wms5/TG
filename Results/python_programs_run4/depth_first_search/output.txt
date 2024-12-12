@@ -1,0 +1,38 @@
+Identifying the Bug
+
+The provided Depth-First Search (DFS) implementation has a potential issue: it doesn't explicitly handle the case where the goal node isn't reachable from the start node. This could lead to an infinite loop or incorrect results in certain scenarios.
+
+Fixing the Bug
+
+To address this, we can introduce a depth limit to the search. This will prevent the algorithm from exploring infinitely deep paths that don't lead to the goal.
+
+Here's the modified code:
+
+Python
+
+def depth_first_search(startnode, goalnode, max_depth=100):
+    nodesvisited = set()
+
+    def search_from(node, depth):
+        if node in nodesvisited:
+            return False
+        elif node is goalnode:
+            return True
+        elif depth <= 0:
+            return False  # Reached maximum depth, no solution found
+        else:
+            return any(
+                search_from(nextnode, depth - 1) for nextnode in node.successors
+            )
+
+    return search_from(startnode, max_depth)
+Explanation of the Fix:
+
+Depth Limit: We've added a max_depth parameter to the depth_first_search function and the search_from recursive function.
+Early Termination: If the current depth reaches zero, the search_from function returns False, indicating that the goal node cannot be reached within the specified depth limit.
+Additional Considerations:
+
+Optimizations: Depending on the specific problem and graph structure, you might consider optimizations like iterative deepening DFS or using a more efficient data structure for visited nodes.
+Path Reconstruction: If you need to find the actual path from the start node to the goal node, you can modify the search_from function to return a path or a boolean indicating success or failure.
+Error Handling: Consider adding error handling for cases like invalid input nodes or empty graphs.
+By incorporating these modifications, you can make the DFS algorithm more robust and efficient in handling various scenarios.

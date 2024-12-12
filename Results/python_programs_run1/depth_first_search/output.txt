@@ -1,0 +1,36 @@
+Identifying the Bug
+
+The provided Depth-First Search (DFS) implementation has a potential issue: it doesn't explicitly handle the case where the search space is exhausted without finding the goal node. This could lead to an infinite loop or incorrect results in certain scenarios.
+
+Fixing the Bug
+
+To address this, we can introduce a depth limit to the search. This will prevent the algorithm from exploring excessively deep paths, ensuring termination even if the goal node isn't found.
+
+Here's the modified DFS implementation with a depth limit:
+
+Python
+
+def depth_first_search(startnode, goalnode, max_depth=100):
+    nodes_visited = set()
+
+    def search_from(node, depth):
+        if node in nodes_visited or depth > max_depth:
+            return False
+        elif node is goalnode:
+            return True
+        else:
+            nodes_visited.add(node)
+            return any(search_from(nextnode, depth + 1) for nextnode in node.successors)
+
+    return search_from(startnode, 0)
+Explanation of the Fix:
+
+Depth Limit: We've added a max_depth parameter to the search_from function. This limits the maximum depth of the search, preventing infinite recursion.
+Early Termination: The function now checks if the current depth exceeds the max_depth limit. If so, it immediately returns False, indicating failure.
+Node Marking: We've added a check to ensure that nodes are marked as visited before exploring their successors. This prevents revisiting the same node multiple times.
+Additional Considerations:
+
+Optimal Depth Limit: The optimal max_depth value depends on the specific problem and search space. A smaller value can lead to faster execution but might miss deeper solutions. A larger value can increase the search time but improve the chances of finding a solution.
+Iterative Deepening DFS: For problems with varying solution depths, Iterative Deepening DFS can be a more efficient approach. It starts with a small depth limit and gradually increases it until the goal node is found or the maximum depth is reached.
+Heuristic Search: If the problem domain allows for it, using a heuristic function can guide the search towards promising paths, potentially reducing the search space.
+By incorporating these modifications, the DFS algorithm becomes more robust and efficient, especially in scenarios with large or complex search spaces.
