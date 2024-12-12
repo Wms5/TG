@@ -1,0 +1,36 @@
+Identifying the Bug
+
+The provided Python code implements a recursive approach to find the Longest Common Subsequence (LCS) of two strings a and b. However, there's a subtle inefficiency in the else branch.
+
+The problem lies in the recursive calls. In the else branch, both longest_common_subsequence(a, b[1:]) and longest_common_subsequence(a[1:], b) are computed, even though one of them is guaranteed to be the correct answer. This leads to redundant calculations, especially for larger strings.
+
+Fixing the Bug
+
+To optimize the code, we can leverage the fact that if the first characters of a and b don't match, the LCS can only be found in either a without the first character or b without the first character.
+
+Here's the corrected code:
+
+Python
+
+def longest_common_subsequence(a, b):
+    if not a or not b:
+        return ''
+
+    elif a[0] == b[0]:
+        return a[0] + longest_common_subsequence(a[1:], b[1:])
+
+    else:
+        return max(
+            longest_common_subsequence(a, b[1:]),
+            longest_common_subsequence(a[1:], b),
+            key=len
+        )
+Explanation of the Fix:
+
+In the else branch, we now only consider two possibilities:
+
+Skipping the first character of b: This is because if the first characters don't match, the LCS cannot include the first character of b.
+Skipping the first character of a: Similarly, if the first characters don't match, the LCS cannot include the first character of a.
+By reducing the number of recursive calls, we significantly improve the efficiency of the algorithm, especially for larger strings.
+
+Note: While this recursive approach is a good starting point, for practical applications, a dynamic programming solution is often preferred due to its better time and space complexity. Dynamic programming allows us to avoid redundant calculations by storing intermediate results in a table.
