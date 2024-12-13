@@ -1,0 +1,40 @@
+Identifying the Bug
+
+The primary issue with the provided get_factors function lies in its recursive approach and the way it handles prime numbers.
+
+Problem:
+
+Incomplete Factorization for Primes: For prime numbers, the function only returns the empty list, as the for loop doesn't find any divisors.
+Fixing the Bug
+
+Here's a corrected version that addresses the prime number issue and optimizes the factorization process:
+
+Python
+
+def get_factors(n):
+    factors = []
+    d = 2
+
+    while d * d <= n:
+        while n % d == 0:
+            factors.append(d)
+            n //= d
+        d += 1
+
+    if n > 1:
+        factors.append(n)
+
+    return factors
+Explanation of the Correction:
+
+Iterative Approach: The function employs an iterative approach, which is often more efficient than recursion for this task.
+Prime Factorization: It iteratively divides n by its smallest prime divisor, adding the divisor to the factors list.
+Handling Prime Numbers: If the loop finishes without fully dividing n, it means n itself is a prime number, so it's added to the factors list.
+Example Usage:
+
+Python
+
+print(get_factors(12))  # Output: [2, 2, 3]
+print(get_factors(17))  # Output: [17]
+print(get_factors(1))   # Output: []
+This revised function provides a correct and efficient solution for finding all factors of a given number, including prime numbers.

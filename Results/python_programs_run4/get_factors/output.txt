@@ -1,0 +1,36 @@
+Identifying the Bug
+
+The primary issue with the provided get_factors function lies in its recursive approach and the way it handles prime numbers. It can lead to incorrect factorizations, particularly for prime numbers and numbers with repeated factors.
+
+Fixing the Bug: A More Efficient Iterative Approach
+
+Here's a corrected and more efficient iterative approach to find factors of a number:
+
+Python
+
+def get_factors(n):
+    factors = []
+    i = 2
+    while i * i <= n:
+        while n % i == 0:
+            factors.append(i)
+            n //= i
+        i += 1
+
+    if n > 1:
+        factors.append(n)
+
+    return factors
+Explanation of the Correction:
+
+Iterative Approach: The iterative approach avoids unnecessary recursion, making it more efficient, especially for large numbers.
+Prime Factorization: The loop iterates up to the square root of n. If i divides n, it's added to the factors list, and n is divided by i repeatedly until i no longer divides it. This ensures correct handling of repeated factors.
+Prime Number Handling: If the loop completes without finding any divisors, the remaining n is a prime factor.
+Example Usage:
+
+Python
+
+print(get_factors(12))  # Output: [2, 2, 3]
+print(get_factors(25))  # Output: [5, 5]
+print(get_factors(17))  # Output: [17]
+This corrected function provides accurate factorizations for all positive integers, including prime numbers and numbers with repeated factors.
