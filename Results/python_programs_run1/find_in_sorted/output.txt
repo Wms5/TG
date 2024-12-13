@@ -1,0 +1,30 @@
+Identifying the Bug:
+
+The primary issue with the provided code lies in the recursive calls within the binsearch function. The recursive calls might lead to infinite recursion in certain cases, particularly when x is not present in the array.
+
+Fixing the Bug:
+
+To correct this, we need to ensure that the search space is always reduced in each recursive call. Here's the corrected version:
+
+Python
+
+def find_in_sorted(arr, x):
+    def binsearch(start, end):
+        if start > end:
+            return -1  # Not found
+        mid = start + (end - start) // 2
+        if x == arr[mid]:
+            return mid
+        elif x < arr[mid]:
+            return binsearch(start, mid - 1)
+        else:
+            return binsearch(mid + 1, end)
+
+    return binsearch(0, len(arr) - 1)
+Explanation of the Fix:
+
+Base Case: The base case is now start > end, indicating that the search space has been exhausted without finding the target element.
+Recursive Calls:
+If x is less than the middle element, the search space is narrowed down to the left half (start to mid - 1).
+If x is greater than the middle element, the search space is narrowed down to the right half (mid + 1 to end).
+By adjusting the recursive calls in this way, we guarantee that the search space is always reduced, preventing infinite recursion.

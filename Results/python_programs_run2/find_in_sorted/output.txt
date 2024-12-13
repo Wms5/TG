@@ -1,0 +1,46 @@
+Identifying the Bug:
+
+The primary issue with the provided code lies in the recursive calls within the binsearch function. While it correctly implements the binary search algorithm's logic, the recursive calls can lead to incorrect results in certain edge cases, specifically when x is not present in the array.
+
+Fixing the Bug:
+
+To address this, we need to ensure that the recursive calls maintain the correct search space. Here's the corrected binsearch function:
+
+Python
+
+def binsearch(start, end):
+    if start > end:
+        return -1  # Not found
+    mid = start + (end - start) // 2
+    if x == arr[mid]:
+        return mid
+    elif x < arr[mid]:
+        return binsearch(start, mid - 1)
+    else:
+        return binsearch(mid + 1, end)
+Explanation of the Fix:
+
+Base Case: If start becomes greater than end, it means we've exhausted the search space without finding x, so we return -1 to indicate not found.
+Midpoint Calculation: The midpoint is calculated as before.
+Comparison and Recursive Calls:
+If x is found at the midpoint, we return the index.
+If x is less than the element at the midpoint, we adjust the end to mid - 1 for the next recursive call.
+If x is greater than the element at the midpoint, we adjust the start to mid + 1 for the next recursive call.
+Complete Corrected Code:
+
+Python
+
+def find_in_sorted(arr, x):
+    def binsearch(start, end):
+        if start > end:
+            return -1
+        mid = start + (end - start) // 2
+        if x == arr[mid]:
+            return mid
+        elif x < arr[mid]:
+            return binsearch(start, mid - 1)
+        else:
+            return binsearch(mid + 1, end)
+
+    return binsearch(0, len(arr) - 1)
+By making this adjustment, the binsearch function will now correctly handle edge cases and return the correct index of x if found, or -1 if not.
