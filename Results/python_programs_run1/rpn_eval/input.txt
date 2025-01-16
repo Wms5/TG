@@ -1,7 +1,7 @@
-Does this program have a bug? How to fix it?
-
 def rpn_eval(tokens):
     def op(symbol, a, b):
+        if symbol == '/' and b == 0:
+            raise ValueError("Division by zero")  # Raise a more informative error
         return {
             '+': lambda a, b: a + b,
             '-': lambda a, b: a - b,
@@ -17,8 +17,6 @@ def rpn_eval(tokens):
         else:
             a = stack.pop()
             b = stack.pop()
-            stack.append(
-                op(token, a, b)
-            )
+            stack.append(op(token, a, b))
 
     return stack.pop()
