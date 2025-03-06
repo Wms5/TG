@@ -7,7 +7,9 @@ fi
 
 echo "Run $1 in execution $2"
 
-output_file="/home/wilkinson/Documents/TCC/TG/Results/python_programs_run$2/$1/notes.txt"
+dir=$(pwd)
+
+output_file="$dir/Results/python_programs_run$2/$1/notes.txt"
 
 command1="pytest QuixBugs/python_testcases/test_$1.py"
 

@@ -1,5 +1,6 @@
 import ast
 import sys
+import os
 
 def compare_python_files(file1, file2):
     try:
@@ -12,8 +13,8 @@ def compare_python_files(file1, file2):
         return False
 
 algorithm = sys.argv[1]
-file1 = "/home/wilkinson/Documents/TCC/TG/QuixBugs/correct_python_programs/" + algorithm + ".py"
-file2 = "/home/wilkinson/Documents/TCC/TG/QuixBugs/python_programs/" + algorithm + ".py"
+file1 = os.getcwd() + "/QuixBugs/correct_python_programs/" + algorithm + ".py"
+file2 = os.getcwd() + "/QuixBugs/python_programs/" + algorithm + ".py"
 
 if compare_python_files(file1, file2):
     print("Same AST")
