@@ -9,7 +9,7 @@ echo "Run $1 in execution $2"
 
 dir=$(pwd)
 
-output_file="$dir/Results/python_programs_run$2/$1/notes.txt"
+output_file="$dir/Results_1_ChatGPT/python_programs_run$2/$1/notes.txt"
 
 command1="pytest QuixBugs/python_testcases/test_$1.py"
 
