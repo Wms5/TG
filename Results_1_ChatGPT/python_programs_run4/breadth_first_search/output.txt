@@ -1,0 +1,59 @@
+Yes, the program has a bug. The issue is in this line inside the while loop:
+
+python
+Copy
+Edit
+queue.extend(node for node in node.successors if node not in nodesseen)
+Issues:
+Wrong node expansion logic
+
+queue.extend(node for node in node.successors if node not in nodesseen) adds node itself instead of its successors.
+This results in duplicate visits and incorrect traversal.
+Incorrect set update (nodesseen.update(node.successors))
+
+The program adds all successors to nodesseen, even if they weren't added to the queue.
+This can cause BFS to skip certain nodes incorrectly.
+Handling an empty queue
+
+The while True: loop can run indefinitely or throw an error when queue.popleft() is called on an empty queue.
+A proper condition (while queue:) should be used.
+Fixed Code:
+python
+Copy
+Edit
+from collections import deque as Queue
+
+def breadth_first_search(startnode, goalnode):
+    queue = Queue()
+    queue.append(startnode)
+
+    nodesseen = set()
+    nodesseen.add(startnode)
+
+    while queue:  # Fix: loop until queue is empty
+        node = queue.popleft()
+
+        if node is goalnode:  # Fix: "is" is fine for checking object identity, but "==" is safer
+            return True
+
+        for successor in node.successors:  # Fix: iterate over node.successors properly
+            if successor not in nodesseen:
+                queue.append(successor)
+                nodesseen.add(successor)  # Fix: Only add visited nodes
+
+    return False  # Fix: If queue is exhausted, return False
+Key Fixes:
+✅ Use while queue instead of while True
+✅ Properly iterate over node.successors and add only unvisited nodes to nodesseen
+✅ Check for goal condition correctly
+✅ Ensure BFS terminates properly
+
+This corrected version should work as expected. 🚀
+
+
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+es, this program has a bug. The issue lies in the loop where new nodes are added to the queue. The problem is that you're updating nodesseen incorrectly, leading to possible duplicate entries and incorrect behavior.
+
+Problems:
+Incorrect Node Comparison (if node is goalnode)
+
+is checks object identity, but == should be used to check equality unless the objects are guaranteed to be identical.
+Use if node == goalnode: instead of if node is goalnode:.
+Incorrect Addition of Nodes to queue
+
+This line:
+python
+Copy
+Edit
+queue.extend(node for node in node.successors if node not in nodesseen)
+incorrectly updates nodesseen. The issue is that nodesseen should be updated before adding nodes to the queue to prevent duplicate insertions.
+Infinite Loop Risk
+
+The while True: loop assumes there will always be nodes to process. If the queue becomes empty, queue.popleft() will raise an error. Instead, check whether the queue is empty.
+Fixed Code:
+python
+Copy
+Edit
+from collections import deque as Queue
+
+def breadth_first_search(startnode, goalnode):
+    queue = Queue()
+    queue.append(startnode)
+
+    nodesseen = set()
+    nodesseen.add(startnode)
+
+    while queue:  # Ensures the loop exits when the queue is empty
+        node = queue.popleft()
+
+        if node == goalnode:  # Use '==' instead of 'is' for comparison
+            return True
+
+        # Add only unseen nodes to queue and mark them as seen immediately
+        for neighbor in node.successors:
+            if neighbor not in nodesseen:
+                queue.append(neighbor)
+                nodesseen.add(neighbor)  # Mark it as seen before adding to avoid duplicates
+
+    return False  # If we exhaust the queue without finding the goal
+Key Fixes:
+✅ Used == for comparing node and goalnode.
+✅ Added while queue: to avoid popleft() on an empty queue.
+✅ Updated nodesseen before adding nodes to queue to avoid duplicates.
+
+With these fixes, your BFS algorithm will work correctly without infinite loops or redundant processing. 🚀
