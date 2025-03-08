@@ -1,0 +1,27 @@
+Yes, the program has a bug. The issue is that it does not mark nodes as visited when exploring them, which can lead to infinite recursion in cyclic graphs. Additionally, goalnode should be checked using == instead of is to ensure proper equality checking.
+
+Bug Fixes:
+Mark nodes as visited: Add node to nodesvisited at the beginning of search_from(node).
+Use == instead of is: The goalnode comparison should use == to check for equality rather than is, which checks object identity.
+Fixed Code:
+python
+Copy
+Edit
+def depth_first_search(startnode, goalnode):
+    nodesvisited = set()
+
+    def search_from(node):
+        if node in nodesvisited:
+            return False
+        nodesvisited.add(node)  # Mark node as visited
+
+        if node == goalnode:  # Use == for comparison
+            return True
+
+        return any(search_from(nextnode) for nextnode in node.successors)
+
+    return search_from(startnode)
+Explanation of Fixes:
+Avoids infinite loops by keeping track of visited nodes.
+Ensures correct goal checking using == instead of is, since nodes may not be the same object but can still be equal in value.
+This should now work correctly for acyclic and cyclic graphs. 🚀

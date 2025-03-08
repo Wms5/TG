@@ -1,0 +1,28 @@
+Yes, there is a bug in this program. The issue is that the nodesvisited set is defined but never updated. This means that the function does not track visited nodes, which can lead to infinite recursion in graphs with cycles.
+
+Fix:
+You should add each visited node to nodesvisited before making recursive calls.
+
+Corrected Code:
+python
+Copy
+Edit
+def depth_first_search(startnode, goalnode):
+    nodesvisited = set()
+
+    def search_from(node):
+        if node in nodesvisited:
+            return False
+        nodesvisited.add(node)  # Mark node as visited
+
+        if node is goalnode:
+            return True
+
+        return any(search_from(nextnode) for nextnode in node.successors)
+
+    return search_from(startnode)
+Why This Fix Works:
+It correctly marks nodes as visited by adding them to nodesvisited.
+Prevents infinite loops in cyclic graphs.
+Maintains the logic of depth-first search while ensuring all nodes are visited only once.
+Would you like a test case to verify this fix? 🚀
