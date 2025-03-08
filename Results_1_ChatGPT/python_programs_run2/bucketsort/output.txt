@@ -1,0 +1,50 @@
+Yes, the program has a bug. Let's analyze the problem and how to fix it.
+
+Issue
+Incorrect iteration in the second loop:
+The loop should iterate over counts, but it's iterating over arr instead.
+enumerate(arr) is incorrect; it should be enumerate(counts), as counts stores the frequency of each number.
+Fix
+Change:
+
+python
+Copy
+Edit
+for i, count in enumerate(arr):
+To:
+
+python
+Copy
+Edit
+for i, count in enumerate(counts):
+Corrected Code
+python
+Copy
+Edit
+def bucketsort(arr, k):
+    counts = [0] * k  # Initialize the counts array
+
+    # Count occurrences of each number
+    for x in arr:
+        counts[x] += 1
+
+    sorted_arr = []
+
+    # Construct the sorted array based on counts
+    for i, count in enumerate(counts):
+        sorted_arr.extend([i] * count)
+
+    return sorted_arr
+Example Usage
+python
+Copy
+Edit
+arr = [4, 2, 2, 3, 1, 4, 3, 0]
+k = 5  # Maximum value in arr is 4, so k should be at least 5
+print(bucketsort(arr, k))
+Output
+csharp
+Copy
+Edit
+[0, 1, 2, 2, 3, 3, 4, 4]
+This correctly sorts the array using counting-based bucket sort.

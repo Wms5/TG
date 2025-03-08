@@ -1,0 +1,26 @@
+Yes, the program has a bug. The issue is in this loop:
+
+python
+Copy
+Edit
+for i, count in enumerate(arr):
+Here, arr is used instead of counts, which causes incorrect indexing. The loop should iterate over counts instead.
+
+Fixed Code:
+python
+Copy
+Edit
+def bucketsort(arr, k):
+    counts = [0] * k
+    for x in arr:
+        counts[x] += 1
+
+    sorted_arr = []
+    for i, count in enumerate(counts):  # Fix: Use counts instead of arr
+        sorted_arr.extend([i] * count)
+
+    return sorted_arr
+Explanation of the Fix:
+The original code incorrectly loops over arr instead of counts, causing wrong sorting behavior.
+The fix ensures we correctly iterate over counts, using i as the index and count as the number of times i should appear in the sorted list.
+Would you like me to add more optimizations or explanations? 😊

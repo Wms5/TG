@@ -1,0 +1,28 @@
+Yes, this program has a bug in the second loop where it builds the sorted array. Specifically, the loop incorrectly iterates over arr instead of counts. This results in i taking values from arr, not the index positions in counts, and count being assigned elements from arr instead of the corresponding frequency counts.
+
+Bug:
+python
+Copy
+Edit
+for i, count in enumerate(arr):  # Wrong: iterates over arr, not counts
+This should iterate over counts, so i correctly represents the element value, and count represents its frequency.
+
+Fixed Code:
+python
+Copy
+Edit
+def bucketsort(arr, k):
+    counts = [0] * k  # Create a frequency array
+    for x in arr:
+        counts[x] += 1  # Count occurrences
+
+    sorted_arr = []
+    for i, count in enumerate(counts):  # Iterate over counts, not arr
+        sorted_arr.extend([i] * count)  # Append 'i' 'count' times
+
+    return sorted_arr
+Explanation of the Fix:
+The first loop correctly counts occurrences of each number.
+The second loop should iterate over counts (not arr) so that i represents the element value, and count tells how many times it appears.
+sorted_arr.extend([i] * count) correctly appends i repeated count times.
+Now, the function will correctly sort the input array using bucket sort. 🚀
