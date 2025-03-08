@@ -1,0 +1,27 @@
+Yes, there is a bug in the program. The issue lies in how the hi index is updated during the binary search. Specifically, in the condition x <= arr[mid], you should set hi = mid - 1, not hi = mid. This is because, after finding mid, the search space should be narrowed to the left part of the array.
+
+Here's the fixed version of the code:
+
+python
+Copy
+Edit
+def find_first_in_sorted(arr, x):
+    lo = 0
+    hi = len(arr) - 1  # Adjust hi to be the last valid index
+
+    while lo <= hi:
+        mid = (lo + hi) // 2
+
+        if x == arr[mid] and (mid == 0 or x != arr[mid - 1]):
+            return mid
+
+        elif x < arr[mid]:  # If x is less than arr[mid], search the left side
+            hi = mid - 1
+
+        else:  # If x is greater than arr[mid], search the right side
+            lo = mid + 1
+
+    return -1
+Key changes:
+hi = len(arr) - 1 ensures that hi is within the valid index range of the array.
+In the binary search update, hi = mid - 1 ensures you're narrowing the search correctly when x < arr[mid].

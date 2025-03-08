@@ -1,0 +1,42 @@
+Yes, there is a bug in your program. The issue is with the line:
+
+python
+Copy
+Edit
+hi = len(arr)
+The hi should be one less than the length of the array because array indices are 0-based. Therefore, hi should be initialized to len(arr) - 1 instead of len(arr).
+
+Additionally, there is an off-by-one error in the binary search loop. In the line:
+
+python
+Copy
+Edit
+while lo <= hi:
+You should change this to while lo <= hi: as well, so the loop condition properly checks the valid range.
+
+Here is the corrected code:
+
+python
+Copy
+Edit
+def find_first_in_sorted(arr, x):
+    lo = 0
+    hi = len(arr) - 1  # Fix the initial value of hi
+
+    while lo <= hi:
+        mid = (lo + hi) // 2
+
+        if x == arr[mid] and (mid == 0 or x != arr[mid - 1]):
+            return mid
+
+        elif x < arr[mid]:  # Change this to "<" to prevent mid from being revisited
+            hi = mid - 1
+
+        else:
+            lo = mid + 1
+
+    return -1
+Key fixes:
+Initialization of hi: It should be len(arr) - 1.
+Binary search condition update: Change hi = mid to hi = mid - 1 to avoid revisiting the same index.
+Now, the function should work correctly and return the index of the first occurrence of x in the sorted array.

@@ -1,0 +1,34 @@
+Yes, this program has a bug in the binary search logic. Specifically, the problem lies in how the hi pointer is updated during the search.
+
+In the line hi = mid, you're not reducing hi enough to avoid re-checking the middle element, which can lead to an infinite loop or incorrect results in some cases.
+
+The Fix:
+You should adjust hi to be mid - 1 instead of mid. This ensures the search continues in the left half, excluding the current mid element.
+
+Here's the corrected version of the code:
+
+python
+Copy
+Edit
+def find_first_in_sorted(arr, x):
+    lo = 0
+    hi = len(arr) - 1  # hi should be len(arr) - 1 because we want the last valid index
+
+    while lo <= hi:
+        mid = (lo + hi) // 2
+
+        if x == arr[mid] and (mid == 0 or x != arr[mid - 1]):
+            return mid
+
+        elif x < arr[mid]:  # Changed the condition to strict inequality
+            hi = mid - 1  # Move hi to mid - 1 to avoid infinite loop or re-checking mid
+
+        else:
+            lo = mid + 1
+
+    return -1
+Key Changes:
+Updated hi logic: hi = mid - 1 to reduce the search space correctly.
+Corrected hi initialization: Set hi = len(arr) - 1 because valid indices go from 0 to len(arr) - 1.
+Condition for the left half search: x < arr[mid] instead of x <= arr[mid] ensures the correct partition of the search space.
+Now, the function should correctly return the index of the first occurrence of x in a sorted array.

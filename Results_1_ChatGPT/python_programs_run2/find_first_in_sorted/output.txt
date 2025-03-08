@@ -1,0 +1,31 @@
+Yes, the program has a bug. Specifically, the issue lies in the condition for updating the hi index in the binary search.
+
+Bug:
+The line hi = mid should actually be hi = mid - 1. This is because in a binary search, when x <= arr[mid] (i.e., the value you are searching for is smaller than or equal to the midpoint value), you want to search in the left half of the array, which is the range from lo to mid - 1, not including the current mid.
+Fix:
+Here’s the corrected version of the program:
+
+python
+Copy
+Edit
+def find_first_in_sorted(arr, x):
+    lo = 0
+    hi = len(arr) - 1  # Corrected to avoid out-of-bound error.
+
+    while lo <= hi:
+        mid = (lo + hi) // 2
+
+        if x == arr[mid] and (mid == 0 or x != arr[mid - 1]):
+            return mid
+
+        elif x <= arr[mid]:
+            hi = mid - 1  # Fix: Search in the left half.
+
+        else:
+            lo = mid + 1
+
+    return -1
+Explanation of Changes:
+hi = len(arr) - 1: The hi index should start at len(arr) - 1, since the highest valid index is len(arr) - 1 (not len(arr)).
+hi = mid - 1: When x <= arr[mid], we want to search the left half of the array, so we adjust hi to be mid - 1.
+This should now correctly implement the binary search for the first occurrence of x in the sorted array.
