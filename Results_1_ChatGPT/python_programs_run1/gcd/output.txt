@@ -1,0 +1,24 @@
+Yes, this program has a bug. The issue is with the recursive call:
+
+python
+Copy
+Edit
+return gcd(a % b, b)
+The arguments should be swapped to ensure proper calculation of the greatest common divisor. The correct version should be:
+
+python
+Copy
+Edit
+def gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd(b, a % b)
+Explanation of the Fix:
+The Euclidean algorithm for computing GCD works by recursively calling gcd(b, a % b), not gcd(a % b, b).
+The original code incorrectly passes a % b as the first argument instead of the second argument, which causes incorrect results.
+Example of Correct Behavior:
+python
+Copy
+Edit
+print(gcd(48, 18))  # Correct output: 6

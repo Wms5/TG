@@ -1,0 +1,41 @@
+Yes, the program has a bug. The issue is in the else clause:
+
+python
+Copy
+Edit
+yield flatten(x)
+Instead of yielding x directly when it's not a list, it mistakenly calls flatten(x), which returns a generator rather than the value itself. This leads to incorrect behavior.
+
+Fix:
+You should simply yield x when x is not a list:
+
+python
+Copy
+Edit
+def flatten(arr):
+    for x in arr:
+        if isinstance(x, list):
+            for y in flatten(x):
+                yield y
+        else:
+            yield x  # Fix: Yield x directly
+Example Usage:
+python
+Copy
+Edit
+nested_list = [1, [2, [3, 4]], 5]
+print(list(flatten(nested_list)))
+Output:
+csharp
+Copy
+Edit
+[1, 2, 3, 4, 5]
+Now, the function correctly flattens a nested list into a single sequence of values.
+
+
+
+
+
+
+
+

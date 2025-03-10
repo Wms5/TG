@@ -1,0 +1,32 @@
+Yes, the program has a bug in the logic of returning the factors of a number. The main issue lies in how the factors are returned when a factor is found. Specifically, the function only returns the first factor and its corresponding divisor (n // i) and does not continue checking for further factors.
+
+To fix this, we need to ensure that the function keeps checking all factors of the number and does not terminate prematurely after finding the first one. Also, the current implementation is not handling the case when n is a prime number properly, as it will return an empty list even if no factors are found.
+
+Here’s a fixed version of the code:
+
+python
+Copy
+Edit
+def get_factors(n):
+    if n == 1:
+        return []
+
+    factors = []
+    for i in range(2, int(n ** 0.5) + 1):
+        while n % i == 0:
+            factors.append(i)
+            n //= i
+
+    if n > 1:
+        factors.append(n)
+
+    return factors
+Explanation of changes:
+We now use a while loop to handle cases where a factor may divide the number multiple times (for example, when n is 12, it will first divide by 2, and then again by 2 before moving on to the next factor).
+After the loop, if the remaining n is greater than 1, that means it’s a prime factor and is added to the list.
+We return all the factors in the factors list.
+This version should return all prime factors of a number. For example:
+
+get_factors(12) will return [2, 2, 3]
+get_factors(15) will return [3, 5]
+get_factors(17) will return [17]

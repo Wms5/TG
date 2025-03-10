@@ -1,0 +1,21 @@
+Yes, there is a bug in the gcd function. The issue is in the recursive call within the else clause. The correct Euclidean algorithm should recursively call gcd(b, a % b) rather than gcd(a % b, b).
+
+Here’s the corrected version of the program:
+
+python
+Copy
+Edit
+def gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd(b, a % b)
+In the original code, the order of the arguments in the recursive call was incorrect. The Euclidean algorithm works by reducing the problem to finding the greatest common divisor of b and the remainder when a is divided by b (i.e., a % b).
+
+
+
+
+
+
+
+

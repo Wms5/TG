@@ -1,0 +1,17 @@
+Yes, the program has a bug. The logic in the recursive call is incorrect. The function gcd(a % b, b) should be gcd(b, a % b).
+
+Here’s why:
+
+The Euclidean algorithm for finding the greatest common divisor (GCD) works by repeatedly applying the formula gcd(a, b) = gcd(b, a % b). The values a and b are swapped in the recursive call, with the second argument being a % b.
+
+So the correct function should be:
+
+python
+Copy
+Edit
+def gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd(b, a % b)
+This should work as expected now.

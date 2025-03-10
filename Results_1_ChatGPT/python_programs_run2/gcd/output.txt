@@ -1,0 +1,30 @@
+Yes, this program has a bug that can cause infinite recursion in some cases.
+
+Bug Explanation:
+In the recursive call:
+
+python
+Copy
+Edit
+return gcd(a % b, b)
+The order of arguments is incorrect. The second argument should be a % b, and the first argument should be b, ensuring that the recursion correctly reduces the values.
+
+Corrected Code:
+python
+Copy
+Edit
+def gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd(b, a % b)
+Why This Fix Works?
+The Euclidean algorithm for computing GCD correctly reduces (a, b) to (b, a % b).
+The base case correctly stops recursion when b == 0, returning a as the GCD.
+Example Runs:
+python
+Copy
+Edit
+print(gcd(48, 18))  # Output: 6
+print(gcd(101, 103))  # Output: 1
+Now, the function correctly computes the GCD for all input cases. 🚀
