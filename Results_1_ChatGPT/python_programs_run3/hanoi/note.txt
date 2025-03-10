@@ -1,3 +1,0 @@
-Falha na correção
-
-Gemini considera codigo com bug como correto - no bug found

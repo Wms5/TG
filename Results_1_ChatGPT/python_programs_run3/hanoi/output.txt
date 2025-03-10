@@ -1,0 +1,21 @@
+The code you provided for solving the Tower of Hanoi problem is mostly correct, but it has a small mistake in the step where the move from start to helper is added to steps.
+
+The steps.append((start, helper)) line should represent the actual move from start to end (not start to helper), because helper is just a temporary holding peg. The recursive structure seems correct, but this single line is what needs to be corrected.
+
+Here's the corrected version of the function:
+
+python
+Copy
+Edit
+def hanoi(height, start=1, end=3):
+    steps = []
+    if height > 0:
+        helper = ({1, 2, 3} - {start} - {end}).pop()
+        steps.extend(hanoi(height - 1, start, helper))
+        steps.append((start, end))  # Correct this line to move from start to end
+        steps.extend(hanoi(height - 1, helper, end))
+
+    return steps
+Explanation of the fix:
+The line steps.append((start, helper)) is changed to steps.append((start, end)), which correctly reflects the move from the start peg to the end peg.
+This should now work as expected and return the sequence of steps needed to solve the Tower of Hanoi problem for a given height.
