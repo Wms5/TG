@@ -1,0 +1,38 @@
+Yes, the program has a bug. The issue lies in how the recursive binsearch function handles the range.
+
+Bug Explanation:
+The base case if start == end: return -1 is incorrect. In a binary search, the search range should be reduced until start exceeds end, meaning start > end should be the base case.
+The recursive call when x > arr[mid] does binsearch(mid, end), but it should be binsearch(mid + 1, end), otherwise, it can get stuck in an infinite recursion when mid == start.
+Similarly, binsearch(start, mid) should be binsearch(start, mid - 1), because mid has already been checked and should be excluded from the search range.
+Fixed Code:
+python
+Copy
+Edit
+def find_in_sorted(arr, x):
+    def binsearch(start, end):
+        if start > end:
+            return -1
+        mid = start + (end - start) // 2
+        if x < arr[mid]:
+            return binsearch(start, mid - 1)
+        elif x > arr[mid]:
+            return binsearch(mid + 1, end)
+        else:
+            return mid
+
+    return binsearch(0, len(arr) - 1)
+Changes and Fixes:
+Changed base case to if start > end: return -1
+Corrected the recursive calls:
+binsearch(start, mid - 1) for the left half
+binsearch(mid + 1, end) for the right half
+Adjusted the initial call to binsearch(0, len(arr) - 1), because array indices are zero-based.
+This ensures that the binary search functions correctly and does not get stuck in infinite recursion. 🚀
+
+
+
+
+
+
+
+
