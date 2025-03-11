@@ -1,0 +1,36 @@
+Yes, this program has a bug. The issue is in the for loop:
+
+python
+Copy
+Edit
+for x in arr:
+    yield heapq.heappushpop(heap, x)
+What's wrong?
+The entire array is being iterated over, including elements outside the k-size window.
+
+The first k elements are inserted into heap, but then all elements (including these first k elements) are pushed into the heap one by one.
+This results in incorrect behavior and may produce unintended results.
+Handling of the first k elements is incorrect.
+
+The heap should be initialized with k+1 elements so that heappushpop works correctly.
+Fixed Code
+python
+Copy
+Edit
+import heapq
+
+def kheapsort(arr, k):
+    heap = arr[:k+1]  # Take first k+1 elements
+    heapq.heapify(heap)
+
+    for x in arr[k+1:]:  # Start from the (k+1)-th element
+        yield heapq.heappushpop(heap, x)
+
+    while heap:
+        yield heapq.heappop(heap)
+Explanation of Fixes
+Initialize the heap with k+1 elements instead of just k
+This ensures that the smallest element is pushed out properly in the sorting process.
+Start iterating from arr[k+1:] instead of arr[:]
+This prevents already inserted elements from being inserted again.
+Now, this function correctly performs a k-way sorting.
