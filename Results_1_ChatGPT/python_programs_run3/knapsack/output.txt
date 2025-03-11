@@ -1,0 +1,32 @@
+Yes, the program has a bug in the condition if weight < j:. This condition should be if weight <= j: because you want to check whether the current item can fit into the knapsack (i.e., if its weight is less than or equal to the current remaining capacity).
+
+Also, there's an issue where the memo dictionary is accessed at (i - 1, j) but the dictionary isn't guaranteed to have those values for the specific i and j because the previous iteration for i might not be fully computed. You should use the defaultdict(int) approach more carefully.
+
+Here’s the corrected code:
+
+python
+Copy
+Edit
+def knapsack(capacity, items):
+    from collections import defaultdict
+    memo = defaultdict(int)
+
+    for i in range(1, len(items) + 1):
+        weight, value = items[i - 1]
+
+        for j in range(1, capacity + 1):
+            # First assume the item is not taken, inherit the previous state
+            memo[i, j] = memo[i - 1, j]
+
+            # If the item fits in the knapsack (weight <= capacity left)
+            if weight <= j:
+                memo[i, j] = max(
+                    memo[i, j],  # Do not take the item
+                    value + memo[i - 1, j - weight]  # Take the item
+                )
+
+    return memo[len(items), capacity]
+Explanation of the fix:
+Condition Fix: Changed the condition from if weight < j: to if weight <= j: to properly check if the current item can fit in the knapsack.
+Memoization: The default dictionary approach is fine; just make sure that you're properly considering both scenarios (taking the item or not).
+This should resolve the bug and make the program work correctly for the knapsack problem.

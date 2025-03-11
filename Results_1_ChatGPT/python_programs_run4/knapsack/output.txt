@@ -1,0 +1,30 @@
+Yes, this program has a bug. The bug is in the condition if weight < j:. This condition should be if weight <= j:, because the knapsack item can be added only if its weight is less than or equal to the current capacity j.
+
+Here’s a breakdown of the bug:
+
+In the knapsack problem, when you're considering whether to include an item, you need to check if the weight of the item is less than or equal to the current available capacity, not just less than it.
+If you use weight < j, it misses the case where the item’s weight exactly matches the available capacity.
+Here’s the corrected code:
+python
+Copy
+Edit
+def knapsack(capacity, items):
+    from collections import defaultdict
+    memo = defaultdict(int)
+
+    for i in range(1, len(items) + 1):
+        weight, value = items[i - 1]
+
+        for j in range(1, capacity + 1):
+            memo[i, j] = memo[i - 1, j]
+
+            if weight <= j:  # Fix the condition here
+                memo[i, j] = max(
+                    memo[i, j],
+                    value + memo[i - 1, j - weight]
+                )
+
+    return memo[len(items), capacity]
+Key Fix:
+Change if weight < j: to if weight <= j:.
+Now, the program should correctly handle cases where the weight of an item is exactly equal to the available capacity.

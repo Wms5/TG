@@ -1,0 +1,29 @@
+Yes, there is a bug in this implementation of the 0/1 Knapsack problem.
+
+Bug Explanation
+The condition if weight < j: should be if weight <= j: because an item can be included if its weight is less than or equal to the current capacity.
+The algorithm is a bottom-up dynamic programming approach, but it uses a defaultdict instead of a 2D list, which works but is less efficient.
+The outer loop correctly iterates over the items, and the inner loop iterates over capacities. However, the inner loop should iterate in reverse (for j in range(capacity, weight - 1, -1)) to prevent using updated values from the same iteration.
+Fixed Code
+python
+Copy
+Edit
+def knapsack(capacity, items):
+    from collections import defaultdict
+    memo = defaultdict(int)
+
+    for i in range(1, len(items) + 1):
+        weight, value = items[i - 1]
+
+        # Iterate in reverse order to prevent overwriting values from the same iteration
+        for j in range(capacity, weight - 1, -1):
+            memo[j] = max(memo[j], value + memo[j - weight])
+
+    return memo[capacity]
+Key Fixes
+Condition Fix: if weight <= j: instead of if weight < j:.
+Loop Order Fix: Reverse iterate over j to avoid overwriting values that are needed for the current iteration.
+Simplified Memoization: Instead of memo[i, j], we use a 1D dictionary (memo[j]) to save space.
+Time Complexity
+O(N × W) where N is the number of items and W is the capacity.
+Now, the function correctly computes the maximum value that can be obtained within the given knapsack capacity. 🚀

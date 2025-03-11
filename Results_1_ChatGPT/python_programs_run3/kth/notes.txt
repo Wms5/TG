@@ -1,0 +1,25 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 7 items
+
+QuixBugs/python_testcases/test_kth.py ..F....                            [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_kth[input_data2-3] ____________________________
+
+input_data = [[3, 6, 7, 1, 6, 3, ...], 2], expected = 3
+
+    @pytest.mark.parametrize("input_data,expected", testdata)
+    def test_kth(input_data, expected):
+>       assert kth(*input_data) == expected
+E       assert None == 3
+E        +  where None = kth(*[[3, 6, 7, 1, 6, 3, ...], 2])
+
+QuixBugs/python_testcases/test_kth.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_kth.py::test_kth[input_data2-3] - asser...
+========================= 1 failed, 6 passed in 0.04s ==========================
+Different AST
+
+prover solução porem insere novo bug
