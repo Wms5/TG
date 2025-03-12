@@ -1,0 +1,57 @@
+Yes, this program has a bug. The issue arises when accessing arr[ends[length + 1]] in this condition:
+
+python
+Copy
+Edit
+if length == longest or val < arr[ends[length + 1]]:
+Problems
+KeyError in ends[length + 1]
+
+The dictionary ends maps the length of subsequences to indices in arr.
+The key length + 1 may not exist in ends, leading to a KeyError when accessing arr[ends[length + 1]].
+Comparison Issue (arr[ends[length + 1]])
+
+Before checking val < arr[ends[length + 1]], you need to ensure that ends[length + 1] exists.
+Fix
+Modify the condition to check whether length + 1 exists in ends before accessing it:
+
+python
+Copy
+Edit
+def lis(arr):
+    ends = {}
+    longest = 0
+
+    for i, val in enumerate(arr):
+
+        prefix_lengths = [j for j in range(1, longest + 1) if arr[ends[j]] < val]
+
+        length = max(prefix_lengths) if prefix_lengths else 0
+
+        # Ensure ends[length + 1] exists before accessing it
+        if length == longest or (length + 1 not in ends or val < arr[ends[length + 1]]):
+            ends[length + 1] = i
+            longest = length + 1
+
+    return longest
+Alternative Approach (Using Binary Search)
+A more efficient way to compute the Longest Increasing Subsequence (LIS) Length is by using binary search with bisect:
+
+python
+Copy
+Edit
+from bisect import bisect_left
+
+def lis(arr):
+    sub = []
+    for val in arr:
+        pos = bisect_left(sub, val)  # Find position in subsequence
+        if pos == len(sub):
+            sub.append(val)  # Extend the sequence
+        else:
+            sub[pos] = val  # Replace the element
+    return len(sub)
+Complexity
+The fixed version of your approach runs in O(n²).
+The binary search version runs in O(n log n).
+Would you like me to explain more details? 😊

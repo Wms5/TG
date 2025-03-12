@@ -1,0 +1,32 @@
+Yes, the program has a bug. The issue is in the recursive case when the first characters of source and target match. Instead of adding 1, it should add 0 because no edit is needed.
+
+Bug Analysis
+Incorrect Line:
+python
+Copy
+Edit
+elif source[0] == target[0]:
+    return 1 + levenshtein(source[1:], target[1:])
+The 1 + is incorrect here because when the first characters match, no edit operation is needed.
+It should simply return the recursive result without adding 1.
+Fixed Code
+python
+Copy
+Edit
+def levenshtein(source, target):
+    if source == '' or target == '':
+        return len(source) or len(target)
+
+    elif source[0] == target[0]:
+        return levenshtein(source[1:], target[1:])  # Fixed line: No extra cost for matching characters
+
+    else:
+        return 1 + min(
+            levenshtein(source,     target[1:]),  # Insertion
+            levenshtein(source[1:], target[1:]),  # Substitution
+            levenshtein(source[1:], target)       # Deletion
+        )
+Further Optimization Considerations
+This recursive approach has exponential time complexity (O(3^n)), making it inefficient for long strings.
+You can improve it with memoization (top-down DP) or dynamic programming (bottom-up DP) to achieve O(m * n) complexity.
+Would you like an optimized version with memoization? 🚀

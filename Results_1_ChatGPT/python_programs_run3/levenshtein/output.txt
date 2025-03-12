@@ -1,0 +1,62 @@
+Yes, the program has a bug. The issue is in this line:
+
+python
+Copy
+Edit
+elif source[0] == target[0]:
+    return 1 + levenshtein(source[1:], target[1:])
+Bug Explanation
+The Levenshtein distance measures the minimum number of single-character edits (insertions, deletions, or substitutions) needed to transform one string into another.
+If the first characters of source and target are equal, no edit is needed for this character. The recursion should proceed without incrementing the distance.
+However, the program incorrectly adds 1 to the distance even when the characters match.
+Fix
+Change:
+
+python
+Copy
+Edit
+elif source[0] == target[0]:
+    return 1 + levenshtein(source[1:], target[1:])
+To:
+
+python
+Copy
+Edit
+elif source[0] == target[0]:
+    return levenshtein(source[1:], target[1:])
+This ensures that if the first characters match, the function simply proceeds without adding to the edit count.
+
+Further Optimization
+The function as written uses a recursive approach without memoization, leading to exponential time complexity
+�
+(
+3
+�
+)
+O(3
+n
+ ), which is very slow for large inputs.
+
+To optimize, use dynamic programming with memoization:
+
+python
+Copy
+Edit
+from functools import lru_cache
+
+@lru_cache(None)
+def levenshtein(source, target):
+    if not source or not target:
+        return len(source) or len(target)
+
+    if source[0] == target[0]:
+        return levenshtein(source[1:], target[1:])
+
+    return 1 + min(
+        levenshtein(source, target[1:]),   # Insert
+        levenshtein(source[1:], target[1:]), # Substitute
+        levenshtein(source[1:], target)    # Delete
+    )
+This significantly reduces redundant calculations by caching results.
+
+Would you like a bottom-up iterative DP version for even better performance? 😊

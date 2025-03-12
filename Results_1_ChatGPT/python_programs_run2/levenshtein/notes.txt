@@ -1,0 +1,11 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 7 items
+
+QuixBugs/python_testcases/test_levenshtein.py ...s...                    [100%]
+
+========================= 6 passed, 1 skipped in 2.68s =========================
+Same AST
+
+solução feita

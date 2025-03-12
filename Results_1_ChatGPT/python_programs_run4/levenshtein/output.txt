@@ -1,0 +1,45 @@
+Yes, this program has a bug. The issue is in the second if-elif condition:
+
+python
+Copy
+Edit
+elif source[0] == target[0]:
+    return 1 + levenshtein(source[1:], target[1:])
+Issue
+If the first characters match, the function should recurse without adding 1 to the result. The current code incorrectly increases the edit distance when characters are the same.
+Fix
+Change:
+
+python
+Copy
+Edit
+elif source[0] == target[0]:
+    return 1 + levenshtein(source[1:], target[1:])
+to:
+
+python
+Copy
+Edit
+elif source[0] == target[0]:
+    return levenshtein(source[1:], target[1:])
+Fixed Code
+python
+Copy
+Edit
+def levenshtein(source, target):
+    if source == '' or target == '':
+        return len(source) or len(target)
+
+    elif source[0] == target[0]:
+        return levenshtein(source[1:], target[1:])  # Remove unnecessary "+1"
+
+    else:
+        return 1 + min(
+            levenshtein(source,     target[1:]),  # Insert
+            levenshtein(source[1:], target[1:]),  # Replace
+            levenshtein(source[1:], target)       # Delete
+        )
+Additional Issue: Inefficiency
+This implementation uses recursion without memoization, making it highly inefficient for longer strings (exponential time complexity). You can improve performance significantly by using memoization (with functools.lru_cache) or dynamic programming.
+
+Would you like an optimized version with memoization? 😊
