@@ -1,0 +1,28 @@
+Yes, the program does have a bug. The issue is with the line:
+
+python
+Copy
+Edit
+upright = rows[r - 1][c] if c < r else 0
+When c == r, this will incorrectly attempt to access an index out of bounds (rows[r - 1][r] does not exist). The check should be c < r + 1 to ensure the index is within bounds.
+
+Here’s the corrected version of the function:
+
+python
+Copy
+Edit
+def pascal(n):
+    rows = [[1]]
+    for r in range(1, n):
+        row = []
+        for c in range(0, r + 1):  # loop through r + 1 elements in each row
+            upleft = rows[r - 1][c - 1] if c > 0 else 0
+            upright = rows[r - 1][c] if c < r else 0
+            row.append(upleft + upright)
+        rows.append(row)
+
+    return rows
+Explanation:
+The outer loop iterates r from 1 to n-1 (i.e., generating rows).
+The inner loop needs to go from 0 to r inclusive (r + 1 values for each row), which is the correct number of elements in the row for Pascal's Triangle.
+This fix will ensure the program runs correctly and generates Pascal's Triangle.

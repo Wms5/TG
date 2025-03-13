@@ -1,0 +1,33 @@
+Yes, there is a bug in the code.
+
+Issue:
+The issue lies in the condition inside the inner loop:
+
+python
+Copy
+Edit
+if perm[j] < perm[i]:
+This condition is incorrect. The goal in generating the next permutation is to find the smallest number that is greater than perm[i], and then swap it with perm[i]. The current code looks for a number that is smaller than perm[i], which is the opposite of the intended logic.
+
+Solution:
+Instead of looking for a number smaller than perm[i], you should look for the smallest number greater than perm[i] from the right side of the list, swap it with perm[i], and then reverse the elements after index i.
+
+Here’s the corrected version:
+
+python
+Copy
+Edit
+def next_permutation(perm):
+    for i in range(len(perm) - 2, -1, -1):
+        if perm[i] < perm[i + 1]:
+            for j in range(len(perm) - 1, i, -1):
+                if perm[j] > perm[i]:  # Change this condition to '>'
+                    next_perm = list(perm)
+                    next_perm[i], next_perm[j] = perm[j], perm[i]
+                    next_perm[i + 1:] = reversed(next_perm[i + 1:])
+                    return next_perm
+    return perm  # Return the original permutation if no next permutation exists (e.g., for the highest permutation)
+Explanation of the changes:
+In the inner loop, the condition is now perm[j] > perm[i], which ensures we find the next greater element to swap.
+The function also includes a return perm statement at the end, which handles the edge case where the permutation is the largest possible permutation, and no next permutation exists.
+This should now generate the correct next permutation.

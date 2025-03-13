@@ -1,0 +1,23 @@
+Yes, there is a bug in the code. The issue is with the condition c < r in the second if statement inside the inner loop. When c equals r, it will be out of bounds because r represents the current row's length, and c should never reach r. So, you should adjust that condition to ensure it does not exceed the row length.
+
+Here's the fixed version of your code:
+
+python
+Copy
+Edit
+def pascal(n):
+    rows = [[1]]
+    for r in range(1, n):
+        row = []
+        for c in range(0, r + 1):  # Loop should go from 0 to r (inclusive)
+            upleft = rows[r - 1][c - 1] if c > 0 else 0
+            upright = rows[r - 1][c] if c < r else 0
+            row.append(upleft + upright)
+        rows.append(row)
+
+    return rows
+Explanation:
+The outer loop (for r in range(1, n)) correctly iterates over each row.
+The inner loop (for c in range(0, r + 1)) should go from 0 to r (inclusive) because each row has one more element than the previous row.
+The condition if c < r else 0 ensures that the "upright" element doesn't go out of bounds when c == r.
+This should now correctly generate Pascal's Triangle.
