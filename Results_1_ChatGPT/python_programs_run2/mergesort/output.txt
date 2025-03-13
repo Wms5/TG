@@ -1,0 +1,54 @@
+Yes, the program has a subtle bug in the merge function.
+
+Bug Explanation
+The issue is with this line inside the merge function:
+
+python
+Copy
+Edit
+result.extend(left[i:] or right[j:])
+This line is intended to append the remaining elements from either left or right after the main merging loop.
+However, or does not work correctly here because if left[i:] is empty ([]), it will evaluate as False, and right[j:] will be used instead.
+This means if left[i:] is empty, the program behaves correctly, but if right[j:] is empty, it does not get appended at all.
+Fix
+Replace:
+
+python
+Copy
+Edit
+result.extend(left[i:] or right[j:])
+with:
+
+python
+Copy
+Edit
+result.extend(left[i:])
+result.extend(right[j:])
+Corrected Code
+python
+Copy
+Edit
+def mergesort(arr):
+    def merge(left, right):
+        result = []
+        i = 0
+        j = 0
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+        result.extend(left[i:])
+        result.extend(right[j:])
+        return result
+
+    if len(arr) == 0:
+        return arr
+    else:
+        middle = len(arr) // 2
+        left = mergesort(arr[:middle])
+        right = mergesort(arr[middle:])
+        return merge(left, right)
+Now, the function correctly appends the remaining elements from both left and right lists. ✅

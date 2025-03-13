@@ -6,4 +6,4 @@
 
 4. pode ocorrer de gemini não conseguir encontrar o bug, porém prover um codigo alternativo vizando eficiencia ou legibilidade e esse codigo passar nos testes. vide to_base execução 3
 
-5.
+5. as vezes a llm não resolve o bug encontrando a linha. simplesmente ela te da uma solução alternativa dado que ele sabe o nome do algoritmo.

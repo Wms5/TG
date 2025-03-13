@@ -1,0 +1,48 @@
+Yes, there is a bug in your mergesort function. The issue is in this line inside the merge function:
+
+python
+Copy
+Edit
+result.extend(left[i:] or right[j:])
+Bug Explanation:
+The or operator here causes unintended behavior. If left[i:] is empty, right[j:] will be appended. However, if left[i:] is not empty, right[j:] will be ignored completely. This is incorrect because we need to append both the remaining elements from left and right, not just one of them.
+
+How to Fix:
+Replace the incorrect line with two separate extend calls:
+
+python
+Copy
+Edit
+result.extend(left[i:])
+result.extend(right[j:])
+Fixed Code:
+python
+Copy
+Edit
+def mergesort(arr):
+    def merge(left, right):
+        result = []
+        i = 0
+        j = 0
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+        result.extend(left[i:])  # Append remaining elements from left
+        result.extend(right[j:])  # Append remaining elements from right
+        return result
+
+    if len(arr) <= 1:
+        return arr  # Base case: Return the array itself if it has 0 or 1 elements
+
+    middle = len(arr) // 2
+    left = mergesort(arr[:middle])
+    right = mergesort(arr[middle:])
+    return merge(left, right)
+Why This Works:
+Now, all remaining elements from both left and right get properly added to result.
+The base case is adjusted to return arr if its length is <= 1, ensuring correctness.
+This should now work correctly as a stable Merge Sort implementation! ✅

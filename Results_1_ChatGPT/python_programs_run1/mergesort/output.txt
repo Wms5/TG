@@ -1,0 +1,42 @@
+The mergesort function you provided is almost correct, but there is a small issue with the logic in the line:
+
+python
+Copy
+Edit
+result.extend(left[i:] or right[j:])
+The problem is that or here doesn't work as expected. The expression left[i:] or right[j:] will return the second list (right[j:]) even if the first one (left[i:]) is not empty, because or evaluates to the first truthy value. Instead, you should extend result with either the remaining elements in left[i:] or right[j:] depending on which one is non-empty. The correct fix is to explicitly extend the result with both lists, like this:
+
+python
+Copy
+Edit
+result.extend(left[i:])
+result.extend(right[j:])
+Here's the corrected version of your mergesort function:
+
+python
+Copy
+Edit
+def mergesort(arr):
+    def merge(left, right):
+        result = []
+        i = 0
+        j = 0
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+        result.extend(left[i:])
+        result.extend(right[j:])
+        return result
+
+    if len(arr) == 0:
+        return arr
+    else:
+        middle = len(arr) // 2
+        left = mergesort(arr[:middle])
+        right = mergesort(arr[middle:])
+        return merge(left, right)
+This will now correctly merge the two halves.
