@@ -1,0 +1,35 @@
+The code you provided implements Reverse Polish Notation (RPN) evaluation. However, there is a bug in the logic. The order of operands a and b when applying the operator in the op() function is reversed. In an RPN expression, the operator applies to the operands in the order they are popped from the stack. So, for an operator +, it should apply as b + a, not a + b.
+
+How to fix it:
+You need to reverse the order of the operands when performing the operation. This can be done by swapping the a and b variables when you call the operator function.
+
+Here is the corrected code:
+
+python
+Copy
+Edit
+def rpn_eval(tokens):
+    def op(symbol, a, b):
+        return {
+            '+': lambda a, b: a + b,
+            '-': lambda a, b: a - b,
+            '*': lambda a, b: a * b,
+            '/': lambda a, b: a / b
+        }[symbol](b, a)  # Swap a and b here
+
+    stack = []
+
+    for token in tokens:
+        if isinstance(token, float):
+            stack.append(token)
+        else:
+            a = stack.pop()
+            b = stack.pop()
+            stack.append(
+                op(token, a, b)
+            )
+
+    return stack.pop()
+Explanation:
+In an RPN expression, operators apply to the last two operands in the order they appear (left to right). Since pop() removes elements from the stack in a LIFO (Last-In-First-Out) manner, the second operand (b) is actually popped before the first operand (a).
+Therefore, when applying the operator, the correct order is op(token, b, a) instead of op(token, a, b).

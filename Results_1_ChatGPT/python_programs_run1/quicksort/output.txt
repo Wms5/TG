@@ -1,0 +1,26 @@
+Yes, this program has a bug: it does not correctly handle elements equal to the pivot. If there are duplicate values, they will be missing in the sorted output.
+
+Bug Explanation
+The list comprehension [x for x in arr[1:] if x > pivot] only includes elements strictly greater than the pivot.
+The list comprehension [x for x in arr[1:] if x < pivot] only includes elements strictly smaller than the pivot.
+Elements equal to pivot (except for the pivot itself) are not included in either lesser or greater, so they are lost in the sorting process.
+Fix
+We need to properly handle elements that are equal to the pivot. A simple way to fix this is to introduce a separate partition for elements equal to the pivot:
+
+python
+Copy
+Edit
+def quicksort(arr):
+    if not arr:
+        return []
+
+    pivot = arr[0]
+    lesser = quicksort([x for x in arr[1:] if x < pivot])
+    equal = [x for x in arr if x == pivot]  # Include all occurrences of pivot
+    greater = quicksort([x for x in arr[1:] if x > pivot])
+
+    return lesser + equal + greater
+What Changed?
+Added equal partition: This ensures all occurrences of pivot are included in the final sorted list.
+Used x == pivot check: This ensures that all instances of pivot (not just the first one) are included.
+This ensures correctness while preserving the simplicity of the quicksort algorithm. 🚀

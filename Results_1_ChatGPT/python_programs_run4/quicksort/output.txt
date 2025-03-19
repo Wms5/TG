@@ -1,0 +1,28 @@
+The code you provided for the quicksort algorithm has a potential issue when there are duplicate values in the array. Specifically, the pivot element is excluded from the "lesser" and "greater" lists, so if there are duplicates of the pivot, they will not be placed correctly in the final sorted array.
+
+Issue:
+The condition x < pivot is correct for values smaller than the pivot, and x > pivot is correct for values greater than the pivot. However, values equal to the pivot are excluded from both lists, which causes them to be missed in the result.
+
+Fix:
+To handle duplicates, you should include values equal to the pivot in the final list. You can fix the bug by adding another condition to handle the equality case for x.
+
+Updated Code:
+python
+Copy
+Edit
+def quicksort(arr):
+    if not arr:
+        return []
+
+    pivot = arr[0]
+    lesser = quicksort([x for x in arr[1:] if x < pivot])
+    equal = [x for x in arr[1:] if x == pivot]  # Collect all values equal to pivot
+    greater = quicksort([x for x in arr[1:] if x > pivot])
+
+    return lesser + [pivot] + equal + greater
+Explanation:
+lesser: List of values smaller than the pivot.
+equal: List of values equal to the pivot.
+greater: List of values greater than the pivot.
+Finally, we concatenate lesser, pivot, equal, and greater to get the sorted array, ensuring that duplicate pivot values are included in the final result.
+Now, the algorithm will correctly handle arrays with duplicates!

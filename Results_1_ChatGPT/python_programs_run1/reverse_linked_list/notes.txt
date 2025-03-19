@@ -1,0 +1,65 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 3 items
+
+QuixBugs/python_testcases/test_reverse_linked_list.py FF.                [100%]
+
+=================================== FAILURES ===================================
+____________________________________ test1 _____________________________________
+
+    def test1():
+        """Case 1: 5-node list input
+        Expected Output: 1 2 3 4 5
+        """
+    
+        node1 = Node(1)
+        node2 = Node(2, node1)
+        node3 = Node(3, node2)
+        node4 = Node(4, node3)
+        node5 = Node(5, node4)
+    
+>       result = reverse_linked_list(node5)
+
+QuixBugs/python_testcases/test_reverse_linked_list.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+node = <node.Node object at 0x7f965ca04f40>
+
+    def reverse_linked_list(node):
+        prevnode = None
+        while node:
+>           nextnode = node.next  # Use `next` instead of `successor`
+E           AttributeError: 'Node' object has no attribute 'next'
+
+QuixBugs/python_programs/reverse_linked_list.py:4: AttributeError
+____________________________________ test2 _____________________________________
+
+    def test2():
+        """Case 2: 1-node list input
+        Expected Output: 0
+        """
+    
+        node = Node(0)
+    
+>       result = reverse_linked_list(node)
+
+QuixBugs/python_testcases/test_reverse_linked_list.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+node = <node.Node object at 0x7f965ca05810>
+
+    def reverse_linked_list(node):
+        prevnode = None
+        while node:
+>           nextnode = node.next  # Use `next` instead of `successor`
+E           AttributeError: 'Node' object has no attribute 'next'
+
+QuixBugs/python_programs/reverse_linked_list.py:4: AttributeError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_reverse_linked_list.py::test1 - Attribu...
+FAILED QuixBugs/python_testcases/test_reverse_linked_list.py::test2 - Attribu...
+========================= 2 failed, 1 passed in 0.04s ==========================
+Different AST
+
+prover correção mas insere novo gub

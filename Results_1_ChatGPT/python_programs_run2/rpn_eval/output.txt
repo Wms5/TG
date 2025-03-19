@@ -1,0 +1,40 @@
+Yes, there seems to be a bug in the code. The issue arises when the order of operands for the operations is incorrect. In Reverse Polish Notation (RPN), the first operand should be pushed first and the second operand should come later, but in your code, the operands are being popped in reverse order, which can lead to incorrect results for non-commutative operations (like subtraction and division).
+
+To fix it, you need to swap the operands when popping them from the stack:
+
+python
+Copy
+Edit
+def rpn_eval(tokens):
+    def op(symbol, a, b):
+        return {
+            '+': lambda a, b: a + b,
+            '-': lambda a, b: a - b,
+            '*': lambda a, b: a * b,
+            '/': lambda a, b: a / b
+        }[symbol](a, b)
+
+    stack = []
+
+    for token in tokens:
+        if isinstance(token, (float, int)):  # Allow both float and int types
+            stack.append(token)
+        else:
+            b = stack.pop()  # Pop b first
+            a = stack.pop()  # Pop a second
+            stack.append(
+                op(token, a, b)
+            )
+
+    return stack.pop()
+Key Changes:
+Swapped the order of a and b when popping from the stack to match the correct operand order for the operation (this ensures the correct result for subtraction and division).
+Updated the type check for token to handle both integers and floats (isinstance(token, (float, int))), which makes the function more flexible.
+Now the program should work correctly for all operations.
+
+
+
+
+
+
+
