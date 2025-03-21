@@ -1,0 +1,44 @@
+Yes, the program has a bug. The issue is in this line inside the loop:
+
+python
+Copy
+Edit
+weight_by_edge[u, v] = min(
+    weight_by_node[u] + weight,
+    weight_by_node[v]
+)
+Problems:
+Wrong variable update:
+
+The intention is to update weight_by_node[v], but instead, weight_by_edge[u, v] is incorrectly modified.
+The edge weights (weight_by_edge) should remain unchanged; only the shortest path estimates (weight_by_node) should be updated.
+Incorrect update formula:
+
+The correct relaxation formula in Bellman-Ford should be:
+python
+Copy
+Edit
+weight_by_node[v] = min(weight_by_node[v], weight_by_node[u] + weight)
+This ensures that weight_by_node[v] gets the shortest distance from source.
+Fixed Code:
+python
+Copy
+Edit
+def shortest_paths(source, weight_by_edge):
+    weight_by_node = {
+        v: float('inf') for u, v in weight_by_edge
+    }
+    weight_by_node[source] = 0
+
+    for _ in range(len(weight_by_node) - 1):
+        for (u, v), weight in weight_by_edge.items():
+            if weight_by_node[u] + weight < weight_by_node[v]:
+                weight_by_node[v] = weight_by_node[u] + weight
+
+    return weight_by_node
+Explanation of Fixes:
+Correctly initializes all nodes with inf, except for the source.
+Loops properly for (V-1) iterations for relaxation.
+Properly relaxes edges using the correct update formula.
+Does not modify weight_by_edge, keeping the input unchanged.
+This should now work as expected for the Bellman-Ford algorithm, which finds the shortest paths from a single source node. 🚀

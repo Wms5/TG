@@ -1,0 +1,38 @@
+Yes, the program has a bug. The issue is in the update step inside the triple-nested loop:
+
+python
+Copy
+Edit
+length_by_path[i, j] = min(
+    length_by_path[i, j],
+    length_by_path[i, k] + length_by_path[j, k]
+)
+Bug Explanation
+The line length_by_path[i, k] + length_by_path[j, k] is incorrect because it tries to use length_by_path[j, k] instead of length_by_path[k, j]. In Floyd-Warshall's algorithm, the correct update formula should be:
+
+\text{length_by_path}[i, j] = \min(\text{length_by_path}[i, j], \text{length_by_path}[i, k] + \text{length_by_path}[k, j])
+Using length_by_path[j, k] incorrectly calculates distances, leading to incorrect shortest path values.
+
+Fixed Code
+python
+Copy
+Edit
+from collections import defaultdict
+
+def shortest_path_lengths(n, length_by_edge):
+    length_by_path = defaultdict(lambda: float('inf'))
+    length_by_path.update({(i, i): 0 for i in range(n)})
+    length_by_path.update(length_by_edge)
+
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                length_by_path[i, j] = min(
+                    length_by_path[i, j],
+                    length_by_path[i, k] + length_by_path[k, j]  # Fix here
+                )
+
+    return length_by_path
+Summary of Fix
+Changed length_by_path[j, k] to length_by_path[k, j] in the update formula.
+Now the function correctly implements the Floyd-Warshall algorithm for computing shortest path lengths. 🚀

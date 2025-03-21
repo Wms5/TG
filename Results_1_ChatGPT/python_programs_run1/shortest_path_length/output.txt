@@ -1,0 +1,85 @@
+Yes, the program has a few bugs and issues. Here’s how to fix them:
+
+Problems and Fixes
+Incorrect is comparison for nodes
+
+if node is goalnode:
+is checks if node and goalnode are the same object, but they might be equivalent (==) instead.
+Fix: Change is to ==:
+python
+Copy
+Edit
+if node == goalnode:
+Incorrect update logic in insert_or_update
+
+When updating an existing entry, modifying node_heap[i] does not maintain the heap invariant.
+Fix: Instead of modifying node_heap in-place, remove the old entry and reinsert:
+python
+Copy
+Edit
+def insert_or_update(node_heap, dist_node):
+    dist, node = dist_node
+    for i, (old_dist, old_node) in enumerate(node_heap):
+        if old_node == node:
+            node_heap.pop(i)  # Remove old entry
+            break
+    heappush(node_heap, dist_node)  # Reinsert
+Incorrect distance calculation
+
+This line is problematic:
+python
+Copy
+Edit
+get(unvisited_nodes, nextnode) + length_by_edge[node, nextnode]
+If get(unvisited_nodes, nextnode) returns 0 (default value), it will incorrectly assume distance 0, which is wrong.
+Fix: Use float('inf') as the default:
+python
+Copy
+Edit
+current_dist = get(unvisited_nodes, nextnode)
+if current_dist == 0:
+    current_dist = float('inf')
+new_dist = min(current_dist, distance + length_by_edge[node, nextnode])
+Heap inefficiency
+
+The heap implementation (list with heappush and heappop) does not efficiently support updates.
+Fix: Instead of modifying an existing heap entry, use a priority queue (dictionary + heap). Or use a priority queue with a set for visited nodes.
+Fixed Code
+python
+Copy
+Edit
+from heapq import heappush, heappop
+
+def shortest_path_length(length_by_edge, startnode, goalnode):
+    unvisited_nodes = []  # Min-heap containing (distance, node)
+    heappush(unvisited_nodes, (0, startnode))
+    visited_nodes = set()
+    distances = {startnode: 0}  # Stores best known distances
+
+    while unvisited_nodes:
+        distance, node = heappop(unvisited_nodes)
+
+        if node == goalnode:
+            return distance  # Found shortest path
+
+        if node in visited_nodes:
+            continue  # Skip nodes already processed
+
+        visited_nodes.add(node)
+
+        for nextnode in node.successors:
+            if nextnode in visited_nodes:
+                continue
+
+            new_dist = distance + length_by_edge[node, nextnode]
+            if new_dist < distances.get(nextnode, float('inf')):
+                distances[nextnode] = new_dist
+                heappush(unvisited_nodes, (new_dist, nextnode))
+
+    return float('inf')
+Key Fixes
+Used == instead of is for node comparison.
+Removed get and insert_or_update, replacing them with distances dictionary.
+Used distances to track shortest known distances.
+Ensured heappush is only called with improved distances.
+This should now correctly implement Dijkstra’s Algorithm and work efficiently. 🚀

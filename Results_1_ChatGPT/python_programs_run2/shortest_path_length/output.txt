@@ -1,0 +1,57 @@
+Yes, the program has a few issues. Here’s what needs to be fixed:
+
+Problems
+Incorrect node comparison (is vs ==)
+
+if node is goalnode: should be if node == goalnode:
+is checks identity, while == checks value. Nodes in a graph should be compared by value.
+Incorrect priority queue update mechanism
+
+insert_or_update modifies node_heap without maintaining heap properties.
+heapq does not support in-place priority updates. Replacing an element like this breaks heap invariants.
+Wrong distance calculation in insert_or_update
+
+get(unvisited_nodes, nextnode) + length_by_edge[node, nextnode]
+If get(unvisited_nodes, nextnode) returns 0 (default), the distance calculation is incorrect.
+get returns 0 for missing nodes, should return float('inf')
+
+This causes incorrect path lengths.
+Fixed Code
+python
+Copy
+Edit
+from heapq import *
+
+def shortest_path_length(length_by_edge, startnode, goalnode):
+    unvisited_nodes = []  # Min-heap containing (distance, node) pairs
+    heappush(unvisited_nodes, (0, startnode))
+    distances = {startnode: 0}  # Track best known distances
+
+    while unvisited_nodes:
+        distance, node = heappop(unvisited_nodes)
+
+        if node == goalnode:
+            return distance  # Correct node comparison
+
+        for nextnode in node.successors:
+            new_distance = distance + length_by_edge[node, nextnode]
+
+            if nextnode not in distances or new_distance < distances[nextnode]:
+                distances[nextnode] = new_distance
+                heappush(unvisited_nodes, (new_distance, nextnode))
+
+    return float('inf')  # No path found
+Fixes Applied
+✅ Used a proper distances dictionary instead of modifying the heap.
+✅ Updated distances correctly and pushed only valid improvements to the heap.
+✅ Fixed node comparison (== instead of is).
+✅ Eliminated unnecessary insert_or_update and get functions, using dictionary lookups instead.
+
+This revised version is now a correct implementation of Dijkstra's algorithm. 🚀
+
+
+
+
+
+
+

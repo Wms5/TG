@@ -1,0 +1,59 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 4 items
+
+QuixBugs/python_testcases/test_shortest_path_length.py .F..              [100%]
+
+=================================== FAILURES ===================================
+____________________________________ test2 _____________________________________
+
+    def test2():
+        """Case 2: Multiple path
+        Output: 7
+        """
+    
+>       result = shortest_path_length(length_by_edge, node0, node5)
+
+QuixBugs/python_testcases/test_shortest_path_length.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+length_by_edge = {(<node.Node object at 0x7f0ce15bfdf0>, <node.Node object at 0x7f0ce15bfe20>): 3, (<node.Node object at 0x7f0ce15bfdf0...de object at 0x7f0ce15bfd00>): 1, (<node.Node object at 0x7f0ce15bfe20>, <node.Node object at 0x7f0ce15bff70>): 2, ...}
+startnode = <node.Node object at 0x7f0ce15bfdf0>
+goalnode = <node.Node object at 0x7f0ce15bfb50>
+
+    def shortest_path_length(length_by_edge, startnode, goalnode):
+        unvisited_nodes = []  # Min-heap of (distance, node) tuples
+        heappush(unvisited_nodes, (0, startnode))
+    
+        distances = {startnode: 0}  # Store the shortest known distance to each node
+        visited_nodes = set()
+    
+        while unvisited_nodes:
+            distance, node = heappop(unvisited_nodes)
+    
+            if node == goalnode:  # Fix: Use == instead of "is"
+                return distance
+    
+            if node in visited_nodes:
+                continue
+            visited_nodes.add(node)
+    
+            for nextnode in node.successors:
+                if nextnode in visited_nodes:
+                    continue
+    
+                new_dist = distance + length_by_edge[node, nextnode]
+    
+                if new_dist < distances.get(nextnode, float('inf')):  # Fix: Use dictionary instead of heap search
+                    distances[nextnode] = new_dist
+>                   heappush(unvisited_nodes, (new_dist, nextnode))
+E                   TypeError: '<' not supported between instances of 'Node' and 'Node'
+
+QuixBugs/python_programs/shortest_path_length.py:28: TypeError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_shortest_path_length.py::test2 - TypeEr...
+========================= 1 failed, 3 passed in 0.04s ==========================
+Different AST
+
+prover solução mas insere novo bug

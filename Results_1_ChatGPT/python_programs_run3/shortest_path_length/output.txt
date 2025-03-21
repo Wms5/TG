@@ -1,0 +1,66 @@
+Yes, the program has a few bugs and inefficiencies. Here’s a breakdown of the problems and how to fix them:
+
+Issues in the Code
+Incorrect use of is for node comparison
+
+python
+Copy
+Edit
+if node is goalnode:
+is checks object identity, but nodes should be compared using ==. Use:
+python
+Copy
+Edit
+if node == goalnode:
+Incorrect calculation of minimum distance in insert_or_update
+
+python
+Copy
+Edit
+get(unvisited_nodes, nextnode) + length_by_edge[node, nextnode]
+get(unvisited_nodes, nextnode) might return 0 (default value) if the node is not found, leading to an incorrect distance calculation.
+Instead, it should return float('inf') when the node is missing.
+Inefficient Priority Queue Management
+
+heapq does not support efficient updating of an existing entry.
+Instead of modifying unvisited_nodes directly, use a dictionary to track distances and push duplicate entries (ignoring outdated ones later).
+Fixed Version
+python
+Copy
+Edit
+from heapq import heappush, heappop
+
+def shortest_path_length(length_by_edge, startnode, goalnode):
+    unvisited_nodes = []  # Min-heap storing (distance, node)
+    heappush(unvisited_nodes, (0, startnode))
+    shortest_dist = {startnode: 0}  # Dictionary to track the shortest distance
+    visited_nodes = set()
+
+    while unvisited_nodes:
+        distance, node = heappop(unvisited_nodes)
+
+        if node in visited_nodes:
+            continue
+        visited_nodes.add(node)
+
+        if node == goalnode:
+            return distance
+
+        for nextnode in node.successors:
+            if nextnode in visited_nodes:
+                continue
+
+            new_dist = distance + length_by_edge.get((node, nextnode), float('inf'))
+
+            if new_dist < shortest_dist.get(nextnode, float('inf')):
+                shortest_dist[nextnode] = new_dist
+                heappush(unvisited_nodes, (new_dist, nextnode))
+
+    return float('inf')  # If goal is unreachable
+Fixes and Improvements
+✅ Uses a dictionary (shortest_dist) to track the best-known distances.
+✅ Eliminates the need for insert_or_update() by simply pushing new distances into the heap.
+✅ Handles missing edges properly with .get((node, nextnode), float('inf')).
+✅ Fixes identity comparison (is → ==).
+
+Now, the function correctly implements Dijkstra’s algorithm for finding the shortest path in a weighted graph. 🚀

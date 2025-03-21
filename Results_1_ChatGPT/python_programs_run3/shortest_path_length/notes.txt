@@ -1,0 +1,58 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 4 items
+
+QuixBugs/python_testcases/test_shortest_path_length.py .F..              [100%]
+
+=================================== FAILURES ===================================
+____________________________________ test2 _____________________________________
+
+    def test2():
+        """Case 2: Multiple path
+        Output: 7
+        """
+    
+>       result = shortest_path_length(length_by_edge, node0, node5)
+
+QuixBugs/python_testcases/test_shortest_path_length.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+length_by_edge = {(<node.Node object at 0x7f13c1693640>, <node.Node object at 0x7f13c1693a30>): 3, (<node.Node object at 0x7f13c1693640...de object at 0x7f13c1693370>): 1, (<node.Node object at 0x7f13c1693a30>, <node.Node object at 0x7f13c1693fa0>): 2, ...}
+startnode = <node.Node object at 0x7f13c1693640>
+goalnode = <node.Node object at 0x7f13c1693280>
+
+    def shortest_path_length(length_by_edge, startnode, goalnode):
+        unvisited_nodes = []  # Min-heap storing (distance, node)
+        heappush(unvisited_nodes, (0, startnode))
+        shortest_dist = {startnode: 0}  # Dictionary to track the shortest distance
+        visited_nodes = set()
+    
+        while unvisited_nodes:
+            distance, node = heappop(unvisited_nodes)
+    
+            if node in visited_nodes:
+                continue
+            visited_nodes.add(node)
+    
+            if node == goalnode:
+                return distance
+    
+            for nextnode in node.successors:
+                if nextnode in visited_nodes:
+                    continue
+    
+                new_dist = distance + length_by_edge.get((node, nextnode), float('inf'))
+    
+                if new_dist < shortest_dist.get(nextnode, float('inf')):
+                    shortest_dist[nextnode] = new_dist
+>                   heappush(unvisited_nodes, (new_dist, nextnode))
+E                   TypeError: '<' not supported between instances of 'Node' and 'Node'
+
+QuixBugs/python_programs/shortest_path_length.py:27: TypeError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_shortest_path_length.py::test2 - TypeEr...
+========================= 1 failed, 3 passed in 0.04s ==========================
+Different AST
+
+prover correção mas insere novo bug

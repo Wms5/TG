@@ -1,0 +1,70 @@
+Yes, the program has a few bugs and logical issues. Here's what's wrong and how to fix it:
+
+Issues:
+Heap Property Not Maintained
+The insert_or_update function modifies elements inside the heap (node_heap[i] = dist_node) without restructuring it afterward. The heap property is not automatically restored when modifying an existing element.
+
+Fix: Instead of modifying the heap in place, remove the outdated entry and push a new one. Alternatively, use a dictionary to store the distances and only push new elements into the heap.
+
+Incorrect get function logic
+
+get(unvisited_nodes, nextnode) or float('inf')
+If get(unvisited_nodes, nextnode) returns 0 (which it does when the node is not found), it incorrectly assigns 0 instead of inf.
+Fix: Change get to return None instead of 0 when the node is not found.
+
+Incorrect condition check for goal node
+
+if node is goalnode:
+This checks for object identity (is) instead of equality (==). It may work incorrectly if the nodes are different instances but represent the same entity.
+Fix: Use if node == goalnode:.
+
+Inefficient Priority Queue Update Strategy
+
+The implementation of insert_or_update repeatedly searches the heap, making it inefficient. A better approach is to use a dictionary (distances) alongside the heap.
+Fixed Code:
+python
+Copy
+Edit
+from heapq import *
+
+def shortest_path_length(length_by_edge, startnode, goalnode):
+    unvisited_nodes = []  # Min-heap of (distance, node) tuples
+    heappush(unvisited_nodes, (0, startnode))
+
+    distances = {startnode: 0}  # Store the shortest known distance to each node
+    visited_nodes = set()
+
+    while unvisited_nodes:
+        distance, node = heappop(unvisited_nodes)
+
+        if node == goalnode:  # Fix: Use == instead of "is"
+            return distance
+
+        if node in visited_nodes:
+            continue
+        visited_nodes.add(node)
+
+        for nextnode in node.successors:
+            if nextnode in visited_nodes:
+                continue
+
+            new_dist = distance + length_by_edge[node, nextnode]
+
+            if new_dist < distances.get(nextnode, float('inf')):  # Fix: Use dictionary instead of heap search
+                distances[nextnode] = new_dist
+                heappush(unvisited_nodes, (new_dist, nextnode))
+
+    return float('inf')  # No path found
+Summary of Fixes:
+Used == instead of is for goal node comparison.
+Replaced the inefficient heap update method with a dictionary (distances).
+Fixed get() function issues by using .get() on the dictionary instead.
+Properly maintained heap properties by only inserting new elements without modifying it in place.
+This implementation ensures correctness and efficiency, making it a proper Dijkstra's algorithm for finding the shortest path. 🚀
+
+
+
+
+
+
+

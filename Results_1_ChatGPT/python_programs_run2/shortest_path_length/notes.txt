@@ -1,0 +1,50 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0
+rootdir: /home/wilkinson/Documents/TCC/TG
+collected 4 items
+
+QuixBugs/python_testcases/test_shortest_path_length.py .F..              [100%]
+
+=================================== FAILURES ===================================
+____________________________________ test2 _____________________________________
+
+    def test2():
+        """Case 2: Multiple path
+        Output: 7
+        """
+    
+>       result = shortest_path_length(length_by_edge, node0, node5)
+
+QuixBugs/python_testcases/test_shortest_path_length.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+length_by_edge = {(<node.Node object at 0x7f8eb80bfdf0>, <node.Node object at 0x7f8eb8293ee0>): 3, (<node.Node object at 0x7f8eb80bfdf0...de object at 0x7f8eb8293dc0>): 1, (<node.Node object at 0x7f8eb8293ee0>, <node.Node object at 0x7f8eb8293eb0>): 2, ...}
+startnode = <node.Node object at 0x7f8eb80bfdf0>
+goalnode = <node.Node object at 0x7f8eb8293c10>
+
+    def shortest_path_length(length_by_edge, startnode, goalnode):
+        unvisited_nodes = []  # Min-heap containing (distance, node) pairs
+        heappush(unvisited_nodes, (0, startnode))
+        distances = {startnode: 0}  # Track best known distances
+    
+        while unvisited_nodes:
+            distance, node = heappop(unvisited_nodes)
+    
+            if node == goalnode:
+                return distance  # Correct node comparison
+    
+            for nextnode in node.successors:
+                new_distance = distance + length_by_edge[node, nextnode]
+    
+                if nextnode not in distances or new_distance < distances[nextnode]:
+                    distances[nextnode] = new_distance
+>                   heappush(unvisited_nodes, (new_distance, nextnode))
+E                   TypeError: '<' not supported between instances of 'Node' and 'Node'
+
+QuixBugs/python_programs/shortest_path_length.py:19: TypeError
+=========================== short test summary info ============================
+FAILED QuixBugs/python_testcases/test_shortest_path_length.py::test2 - TypeEr...
+========================= 1 failed, 3 passed in 0.04s ==========================
+Different AST
+
+tenta resolver outra coisa
