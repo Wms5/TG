@@ -1,0 +1,47 @@
+Yes, the program has a bug. The issue is that operators are never pushed onto opstack. The function is missing the step where it actually pushes the current operator onto the stack after popping higher or equal precedence operators.
+
+Bug Analysis
+When encountering an operator (+, -, *, /), the program correctly pops operators of higher or equal precedence from opstack to rpntokens.
+
+However, after that, it fails to push the current operator onto opstack.
+
+As a result, opstack remains empty, and all operators are lost, leading to incorrect output.
+
+Fixed Code
+python
+Copy
+Edit
+def shunting_yard(tokens):
+    precedence = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2
+    }
+
+    rpntokens = []
+    opstack = []
+    for token in tokens:
+        if isinstance(token, int):  # If it's a number, add to output
+            rpntokens.append(token)
+        else:  # If it's an operator
+            while opstack and precedence[opstack[-1]] >= precedence[token]:
+                rpntokens.append(opstack.pop())
+            opstack.append(token)  # Push current operator onto stack
+
+    while opstack:  # Pop remaining operators
+        rpntokens.append(opstack.pop())
+
+    return rpntokens
+Example Test Case
+python
+Copy
+Edit
+tokens = [3, '+', 5, '*', 2]
+print(shunting_yard(tokens))
+Expected Output (Reverse Polish Notation)
+css
+Copy
+Edit
+[3, 5, 2, '*', '+']
+Now the function correctly converts infix expressions to postfix notation using the Shunting-Yard algorithm. 🚀

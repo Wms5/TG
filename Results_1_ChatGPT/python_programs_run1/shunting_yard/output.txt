@@ -1,0 +1,49 @@
+Yes, the program has a bug. The issue is that operators are never pushed onto the opstack, which means that the final output will always be incorrect.
+
+Issue
+When an operator token (e.g., +, -, *, /) is encountered, the code only pops from the stack based on precedence but never pushes the current operator onto the stack.
+
+Fix
+You need to push the current operator onto opstack after popping operators with higher or equal precedence.
+
+Corrected Code
+python
+Copy
+Edit
+def shunting_yard(tokens):
+    precedence = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2
+    }
+
+    rpntokens = []
+    opstack = []
+
+    for token in tokens:
+        if isinstance(token, int):
+            rpntokens.append(token)
+        else:
+            while opstack and precedence[token] <= precedence[opstack[-1]]:
+                rpntokens.append(opstack.pop())
+            opstack.append(token)  # Push the current operator onto the stack
+
+    while opstack:
+        rpntokens.append(opstack.pop())
+
+    return rpntokens
+Example Usage
+python
+Copy
+Edit
+tokens = [3, '+', 5, '*', 2]
+print(shunting_yard(tokens))
+Expected Output (Postfix Notation)
+css
+Copy
+Edit
+[3, 5, 2, '*', '+']
+This correctly converts the infix expression 3 + 5 * 2 to Reverse Polish Notation (RPN) as 3 5 2 * +.
+
+Let me know if you need further explanation! 🚀

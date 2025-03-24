@@ -1,0 +1,42 @@
+Yes, your program has a bug. The issue is that when encountering an operator, the program does not push it onto the opstack, leading to an empty operator stack and incorrect handling of operators.
+
+Bug Explanation:
+Operators are not being pushed onto the opstack after popping higher or equal precedence operators.
+
+Parentheses are not handled, meaning the function does not properly support expressions with parentheses.
+
+Fixed Code:
+python
+Copy
+Edit
+def shunting_yard(tokens):
+    precedence = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2
+    }
+
+    rpntokens = []
+    opstack = []
+
+    for token in tokens:
+        if isinstance(token, int):  # If the token is a number, add it to the output
+            rpntokens.append(token)
+        else:  # If the token is an operator
+            while opstack and precedence.get(opstack[-1], 0) >= precedence.get(token, 0):
+                rpntokens.append(opstack.pop())
+            opstack.append(token)  # Push the current operator onto the stack
+
+    while opstack:  # Pop remaining operators in the stack
+        rpntokens.append(opstack.pop())
+
+    return rpntokens
+Key Fixes:
+After popping higher or equal precedence operators, the new operator is pushed onto opstack.
+
+Used precedence.get(opstack[-1], 0) to handle cases where the stack might contain an unsupported token.
+
+Ensured all remaining operators are moved to rpntokens after processing.
+
+This should now correctly convert an infix expression (given as a list of tokens) into Reverse Polish Notation (RPN). 🚀
