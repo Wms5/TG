@@ -1,0 +1,31 @@
+Yes, the program has a bug in the while condition. The issue is with the condition:
+
+python
+Copy
+Edit
+while abs(x - approx) > epsilon:
+Bug Explanation
+The condition should check the difference between approx ** 2 (which is the square of the approximation) and x, rather than x - approx.
+
+Right now, it compares the difference between x and approx, which does not properly check how close approx ** 2 is to x.
+
+Fixed Code
+python
+Copy
+Edit
+def sqrt(x, epsilon):
+    approx = x / 2  # Initial guess
+    while abs(approx**2 - x) > epsilon:  # Fix condition
+        approx = 0.5 * (approx + x / approx)  # Newton's method update
+    return approx
+Example Usage
+python
+Copy
+Edit
+print(sqrt(25, 0.0001))  # Output: approximately 5.0
+print(sqrt(2, 0.0001))   # Output: approximately 1.414
+Key Fix
+Changed abs(x - approx) to abs(approx**2 - x), ensuring the loop stops when approx**2 is sufficiently close to x.
+This correctly applies Newton’s Method to approximate the square root.
+
+Would you like further optimizations? 🚀
