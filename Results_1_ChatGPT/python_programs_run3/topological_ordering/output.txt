@@ -1,0 +1,55 @@
+Yes, this program has a bug in its logic for determining the topological ordering of the graph. Here are the issues and how to fix them:
+
+Problems:
+Incorrect node processing order:
+
+The algorithm attempts to add nodes to ordered_nodes only if all their outgoing nodes are already in ordered_nodes. However, this condition is incorrect. Instead, nodes should be added when all incoming nodes have been processed.
+
+Incorrect use of set(ordered_nodes).issuperset(nextnode.outgoing_nodes)
+
+The program checks whether all outgoing nodes of nextnode are in ordered_nodes, which is not how topological sorting works. The correct approach is to process nodes when all incoming nodes have already been added.
+
+No explicit tracking of in-degree counts
+
+A standard topological sorting algorithm (e.g., Kahn's algorithm) keeps track of in-degree counts to determine which nodes are ready to be processed.
+
+Fix using Kahn's Algorithm
+Here’s the corrected version:
+
+python
+Copy
+Edit
+from collections import deque
+
+def topological_ordering(nodes):
+    # Compute in-degree of each node
+    in_degree = {node: len(node.incoming_nodes) for node in nodes}
+
+    # Initialize queue with nodes having no incoming edges (in-degree 0)
+    queue = deque([node for node in nodes if in_degree[node] == 0])
+
+    ordered_nodes = []
+
+    while queue:
+        node = queue.popleft()
+        ordered_nodes.append(node)
+
+        # Reduce in-degree of outgoing nodes and add to queue if in-degree becomes 0
+        for nextnode in node.outgoing_nodes:
+            in_degree[nextnode] -= 1
+            if in_degree[nextnode] == 0:
+                queue.append(nextnode)
+
+    # Check if all nodes are processed (detects cycles)
+    if len(ordered_nodes) != len(nodes):
+        raise ValueError("Graph has a cycle, topological ordering is not possible")
+
+    return ordered_nodes
+Key Fixes:
+We explicitly track the in-degree of each node.
+
+We use a queue (BFS approach) to process nodes in the correct order.
+
+We check for cycles by ensuring all nodes are processed.
+
+Now, this correctly returns a valid topological order of the nodes if the graph is a DAG (Directed Acyclic Graph). 🚀

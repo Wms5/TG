@@ -1,0 +1,25 @@
+Yes, this program has a bug. The issue is that after splitting text, the remaining text (text[end:]) may still start with a space, which is carried over to the next iteration. This can cause extra leading spaces in subsequent lines.
+
+Fix: Strip Leading Spaces
+To fix this, strip any leading spaces from text after cutting the line:
+
+python
+Copy
+Edit
+def wrap(text, cols):
+    lines = []
+    while len(text) > cols:
+        end = text.rfind(' ', 0, cols + 1)
+        if end == -1:
+            end = cols
+        line, text = text[:end], text[end:].lstrip()  # Strip leading spaces
+        lines.append(line)
+
+    lines.append(text)  # Append remaining text
+    return lines
+Explanation of Fix
+lstrip() ensures that any leading spaces in the remaining text are removed.
+
+lines.append(text) ensures that the last part of the text is added, even if it's shorter than cols.
+
+Would you like any modifications, such as handling hyphenated words better?

@@ -1,0 +1,33 @@
+The function wrap() is designed to split a string text into multiple lines such that each line doesn't exceed a specified number of columns (cols). However, there's a bug in the code where the function doesn't properly handle the remaining part of the string after the loop ends. Specifically, if the remaining text is shorter than cols, it won't add it as the last line to the lines list.
+
+Bug:
+The loop while len(text) > cols stops when the remaining text is less than or equal to cols, but the function doesn't add this last part of the text to the lines list.
+
+Fix:
+To fix this, we need to ensure that after the loop finishes, any remaining text is added as the last line. Here's the corrected version:
+
+python
+Copy
+Edit
+def wrap(text, cols):
+    lines = []
+    while len(text) > cols:
+        end = text.rfind(' ', 0, cols + 1)
+        if end == -1:
+            end = cols
+        line, text = text[:end], text[end:].lstrip()  # Remove leading spaces after cutting
+        lines.append(line)
+
+    # Add the remaining text as the last line
+    if text:
+        lines.append(text)
+
+    return lines
+Explanation:
+The loop works the same way to split the text into lines.
+
+After the loop, we check if any text is left. If so, it's added as the final line.
+
+I added .lstrip() to remove leading spaces from the remaining text so that the next line doesn't start with an unwanted space.
+
+This fix ensures that the function works as intended, even if the remaining text after the loop is less than cols characters long.

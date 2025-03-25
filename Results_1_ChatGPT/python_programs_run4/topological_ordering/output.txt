@@ -1,0 +1,57 @@
+Yes, this program has a bug. The issue lies in the logic used to determine when a node should be added to the ordered_nodes list.
+
+Bug Explanation
+The function attempts to perform a topological ordering of the nodes in a directed graph.
+
+It first adds all nodes with no incoming edges to ordered_nodes (which is correct).
+
+However, in the second loop, the condition:
+
+python
+Copy
+Edit
+if set(ordered_nodes).issuperset(nextnode.outgoing_nodes) and nextnode not in ordered_nodes:
+is incorrect. It checks whether ordered_nodes contains all outgoing nodes of nextnode, but this does not ensure that all of nextnode's incoming dependencies have been processed.
+
+Fix
+Use Kahn’s algorithm for topological sorting.
+
+Maintain an explicit count of incoming edges (in-degree).
+
+Use a queue to process nodes with in-degree = 0.
+
+Corrected Code
+python
+Copy
+Edit
+from collections import deque
+
+def topological_ordering(nodes):
+    # Initialize in-degree count for each node
+    in_degree = {node: len(node.incoming_nodes) for node in nodes}
+
+    # Start with nodes having no incoming edges
+    queue = deque([node for node in nodes if in_degree[node] == 0])
+    ordered_nodes = []
+
+    while queue:
+        node = queue.popleft()
+        ordered_nodes.append(node)
+
+        # Reduce in-degree for outgoing nodes
+        for nextnode in node.outgoing_nodes:
+            in_degree[nextnode] -= 1
+            if in_degree[nextnode] == 0:
+                queue.append(nextnode)
+
+    # If all nodes are processed, return result; otherwise, there is a cycle
+    if len(ordered_nodes) == len(nodes):
+        return ordered_nodes
+    else:
+        raise ValueError("Graph contains a cycle, topological ordering is not possible")
+Why This Works
+✅ Uses a queue (BFS approach) to process nodes in correct order.
+✅ Ensures a node is only processed when all its incoming dependencies are in ordered_nodes.
+✅ Detects cycles by checking if all nodes were processed.
+
+Let me know if you need further clarification! 🚀

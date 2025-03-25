@@ -1,0 +1,55 @@
+Yes, this program has a bug. The issue is that the result string is being built in the wrong order. Each new digit is appended to the end of the string, but since the least significant digit is calculated first, the final result should be reversed before returning.
+
+Fix
+Modify the code to prepend characters instead of appending them or reverse the string before returning:
+
+Fixed Code (Reversing the Result Before Returning)
+python
+Copy
+Edit
+import string
+def to_base(num, b):
+    if num == 0:
+        return "0"
+
+    result = ''
+    alphabet = string.digits + string.ascii_uppercase
+    while num > 0:
+        i = num % b
+        num = num // b
+        result = alphabet[i] + result  # Prepend instead of append
+
+    return result
+Alternatively, you could store the digits in a list and reverse them before joining:
+
+Fixed Code (Using a List and Reversing at the End)
+python
+Copy
+Edit
+import string
+def to_base(num, b):
+    if num == 0:
+        return "0"
+
+    result = []
+    alphabet = string.digits + string.ascii_uppercase
+    while num > 0:
+        i = num % b
+        num = num // b
+        result.append(alphabet[i])
+
+    return ''.join(result[::-1])  # Reverse before joining
+Explanation of the Fix
+The original code appends digits to result, resulting in a reversed output.
+
+The fix ensures that digits are prepended or reversed before returning.
+
+Also, a base case for num == 0 is added to correctly return "0".
+
+Example
+python
+Copy
+Edit
+print(to_base(255, 16))  # Expected output: "FF"
+print(to_base(10, 2))    # Expected output: "1010"
+print(to_base(100, 8))   # Expected output: "144"

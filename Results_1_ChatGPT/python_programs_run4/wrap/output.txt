@@ -1,0 +1,27 @@
+Yes, the provided program has a bug. It does not handle the case where the remaining text is less than the specified column width. Specifically, when the length of text is smaller than cols, the while loop will exit, but the remaining text will not be added to lines.
+
+To fix this, you can add a final line to append the remaining text once the loop is complete. Here’s the corrected code:
+
+python
+Copy
+Edit
+def wrap(text, cols):
+    lines = []
+    while len(text) > cols:
+        end = text.rfind(' ', 0, cols + 1)
+        if end == -1:
+            end = cols
+        line, text = text[:end], text[end:].lstrip()  # Strip leading spaces
+        lines.append(line)
+
+    # Add the final line with the remaining text
+    if text:
+        lines.append(text)
+
+    return lines
+Explanation of changes:
+After the while loop, the remaining text is appended to lines if it’s non-empty.
+
+Used lstrip() to remove any leading spaces from the remaining text that might have been left behind after breaking the lines.
+
+Now the program will properly handle all cases, including the case where the text is shorter than the specified column width.

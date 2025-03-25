@@ -1,0 +1,32 @@
+Yes, the program has a bug. The issue is in how the result string is constructed. Since the new digits are appended to the end of result, the final string will be in reverse order.
+
+Bug Explanation:
+The correct way to convert a number to another base is by prepending digits (or reversing the final result). The current implementation appends digits instead, leading to an incorrect order.
+
+Fix:
+Modify the code to prepend digits by using string concatenation with result = alphabet[i] + result. This ensures the digits are in the correct order.
+
+Fixed Code:
+python
+Copy
+Edit
+import string
+
+def to_base(num, b):
+    if num == 0:
+        return "0"  # Handle the case where num is 0
+    result = ''
+    alphabet = string.digits + string.ascii_uppercase
+    while num > 0:
+        i = num % b
+        num = num // b
+        result = alphabet[i] + result  # Fix: Prepend instead of append
+    return result
+Example Runs:
+python
+Copy
+Edit
+print(to_base(255, 16))  # Expected: "FF"
+print(to_base(10, 2))    # Expected: "1010"
+print(to_base(0, 8))     # Expected: "0"
+Now, the function correctly converts numbers to their respective bases. 🚀
